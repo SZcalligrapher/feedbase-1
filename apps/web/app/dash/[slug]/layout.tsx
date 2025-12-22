@@ -95,8 +95,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <UserDropdown user={user} />
           </div>
         </div>
-        <div className='flex h-full w-full flex-row justify-start p-5 pt-[64px]'>
-          {/* Sidebar */}
+        <div className='flex h-full w-full flex-row justify-start pt-[64px]'>
+          {/* Sidebar - Fixed on the left */}
           <Sidebar
             tabs={tabs}
             projects={projects}
@@ -105,7 +105,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           />
 
           {/* Main content */}
-          <div className='flex w-full flex-col items-start justify-start overflow-hidden pb-20 md:pb-0 md:pl-[240px]'>
+          <div className='flex w-full flex-col items-start justify-start overflow-hidden p-5 pb-20 md:pb-0 md:ml-[240px]'>
             <TitleProvider
               tabs={tabs}
               initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
