@@ -132,7 +132,13 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrite root application to `/home` folder
+  // But allow /dash/* routes to pass through directly (for login, signup, etc.)
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
+    // Allow /dash and /dash/* routes to pass through without rewrite
+    if (path === '/dash' || path.startsWith('/dash/')) {
+      return NextResponse.next();
+    }
+    
     return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
       headers: {
         'x-pathname': path,
