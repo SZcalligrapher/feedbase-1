@@ -58,7 +58,7 @@ export default async function HubLayout({ children, params }: Props) {
   const currentTab = tabs.find((tab) => tab.link === `/${pathname!.split('/')[1]}`);
 
   if (!currentTab) {
-    redirect('/feedback');
+    redirect(`/${params.project}/feedback`);
   }
 
   // Get project data
