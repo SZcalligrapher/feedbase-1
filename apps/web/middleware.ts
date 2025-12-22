@@ -146,8 +146,13 @@ export default async function middleware(req: NextRequest) {
       // Check if second segment is a known project subpath
       const knownSubpaths = ['feedback', 'changelog', 'unsubscribe'];
       if (pathSegments.length === 1 || (pathSegments.length === 2 && knownSubpaths.includes(pathSegments[1]))) {
-        // This looks like a project slug route, let it pass through
-        return NextResponse.next();
+        // This looks like a project slug route, rewrite to same path with proper headers
+        return NextResponse.rewrite(new URL(path, req.url), {
+          headers: {
+            'x-pathname': path,
+            'x-project': pathSegments[0],
+          },
+        });
       }
     }
     
