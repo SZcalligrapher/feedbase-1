@@ -13,6 +13,7 @@ import {
   SettingsIcon,
   TagLabelIcon,
 } from '@/components/shared/icons/icons-animated';
+import { Icons } from '@/components/shared/icons/icons-static';
 import UserDropdown from '@/components/shared/user-dropdown';
 
 const tabs = [
@@ -76,43 +77,47 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const activeTabIndex = tabs.findIndex((tab) => pathname?.includes(tab.slug));
 
   return (
-    <main className='bg-white flex min-h-screen w-full min-w-full overflow-hidden'>
-      {/* Sidebar - Fixed on the left */}
-      <Sidebar
-        tabs={tabs}
-        projects={projects}
-        activeTabIndex={activeTabIndex}
-        currentProject={currentProject}
-      />
-
-      {/* Main Content Area */}
-      <div className='flex flex-1 flex-col ml-64'>
-        {/* Header */}
-        <header className='bg-white border-b border-gray-200 sticky top-0 z-30 h-16 flex items-center justify-between px-6'>
+    <main className='bg-root flex min-h-screen w-full min-w-full justify-center overflow-hidden'>
+      <div className='flex h-full w-full flex-col items-center lg:max-w-screen-xl'>
+        {/* Header with logo and hub button */}
+        {/* BUG: Find a way to solve issue of scroll bar getting removed on avatar dialog open */}
+        {/* https://github.com/radix-ui/primitives/discussions/1100 */}
+        <div className='bg-root fixed top-0 z-50 flex h-16 w-full flex-row items-center justify-between overflow-y-auto px-5 lg:max-w-screen-xl'>
+          {/* Logo */}
+          <Icons.LogoText className='fill-foreground hidden h-9 pl-1 md:block' />
           <TitleProvider
             tabs={tabs}
             initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
-            className='text-xl font-semibold text-gray-900'
+            className='text-2xl font-semibold md:hidden'
           />
-          <div className='flex flex-row items-center gap-3'>
+          <div className='flex flex-row items-center gap-2'>
             <InboxPopover user={user} />
             <UserDropdown user={user} />
           </div>
-        </header>
-
-        {/* Page Content */}
-        <div className='flex-1 p-6 overflow-y-auto'>
-          <TitleProvider
-            tabs={tabs}
-            initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
-            className='hidden text-3xl font-semibold text-gray-900 mb-6 md:block'
-          />
-          {children}
         </div>
-      </div>
+        <div className='flex h-full w-full flex-row justify-start p-5 pt-[64px]'>
+          {/* Sidebar */}
+          <Sidebar
+            tabs={tabs}
+            projects={projects}
+            activeTabIndex={activeTabIndex}
+            currentProject={currentProject}
+          />
 
-      {/* Navbar (mobile) */}
-      <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
+          {/* Main content */}
+          <div className='flex w-full flex-col items-start justify-start overflow-hidden pb-20 md:pb-0 md:pl-[240px]'>
+            <TitleProvider
+              tabs={tabs}
+              initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
+              className='hidden text-3xl font-semibold md:block'
+            />
+            {children}
+          </div>
+        </div>
+
+        {/* Navbar (mobile) */}
+        <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
+      </div>
     </main>
   );
 }
