@@ -132,23 +132,11 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrite root application to `/home` folder
-  // But allow /dash/* routes and project slug routes to pass through directly
+  // But allow /dash/* routes to pass through directly (for login, signup, etc.)
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
     // Allow /dash and /dash/* routes to pass through without rewrite
     if (path === '/dash' || path.startsWith('/dash/')) {
       return NextResponse.next();
-    }
-    
-    // Allow project slug routes (e.g., /achiva, /achiva/feedback) to pass through
-    // Project slugs are single-segment paths or single word + known subpaths
-    const pathSegments = path.split('/').filter(Boolean);
-    if (pathSegments.length > 0 && pathSegments.length <= 2) {
-      // Check if second segment is a known project subpath
-      const knownSubpaths = ['feedback', 'changelog', 'unsubscribe'];
-      if (pathSegments.length === 1 || (pathSegments.length === 2 && knownSubpaths.includes(pathSegments[1]))) {
-        // This looks like a project slug route, let it pass through
-        return NextResponse.next();
-      }
     }
     
     return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
