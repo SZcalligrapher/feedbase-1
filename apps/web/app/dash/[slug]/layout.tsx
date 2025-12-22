@@ -26,7 +26,7 @@ const tabs = [
     slug: 'feedback',
   },
   {
-    name: 'Roadmap (Soon)',
+    name: 'Roadmap',
     icon: CalendarIcon,
     slug: 'roadmap',
   },
