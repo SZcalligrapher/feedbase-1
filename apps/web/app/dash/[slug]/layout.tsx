@@ -7,13 +7,11 @@ import NavbarMobile from '@/components/layout/nav-bar-mobile';
 import Sidebar from '@/components/layout/sidebar';
 import TitleProvider from '@/components/layout/title-provider';
 import {
-  AnalyticsIcon,
   CalendarIcon,
   FeedbackIcon,
   SettingsIcon,
   TagLabelIcon,
 } from '@/components/shared/icons/icons-animated';
-import { Icons } from '@/components/shared/icons/icons-static';
 import UserDropdown from '@/components/shared/user-dropdown';
 
 const tabs = [
@@ -31,11 +29,6 @@ const tabs = [
     name: 'Roadmap (Soon)',
     icon: CalendarIcon,
     slug: 'roadmap',
-  },
-  {
-    name: 'Analytics',
-    icon: AnalyticsIcon,
-    slug: 'analytics',
   },
   {
     name: 'Settings',
@@ -83,8 +76,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
         {/* BUG: Find a way to solve issue of scroll bar getting removed on avatar dialog open */}
         {/* https://github.com/radix-ui/primitives/discussions/1100 */}
         <div className='bg-root fixed top-0 z-50 flex h-16 w-full flex-row items-center justify-between overflow-y-auto px-5 lg:max-w-screen-xl'>
-          {/* Logo */}
-          <Icons.LogoText className='fill-foreground hidden h-9 pl-1 md:block' />
           <TitleProvider
             tabs={tabs}
             initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
