@@ -191,7 +191,7 @@ export default function RoadmapKanban({ feedback, projectSlug }: RoadmapKanbanPr
                   className='text-muted-foreground hover:text-foreground w-full justify-start border-2 border-dashed'
                   onClick={() => {
                     // TODO: Open create feedback modal
-                    toast.info('Create feedback feature coming soon');
+                    toast('Create feedback feature coming soon');
                   }}>
                   + Add a request
                 </Button>
