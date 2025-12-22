@@ -36,5 +36,13 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(new URL(redirect || '/', requestUrl.origin));
+  // If redirect is provided, use it; otherwise redirect to dashboard
+  const redirectUrl = redirect || '/dash';
+  
+  // If redirect is a relative path, make it absolute
+  const finalRedirectUrl = redirectUrl.startsWith('http') 
+    ? redirectUrl 
+    : new URL(redirectUrl, requestUrl.origin).toString();
+  
+  return NextResponse.redirect(finalRedirectUrl);
 }
