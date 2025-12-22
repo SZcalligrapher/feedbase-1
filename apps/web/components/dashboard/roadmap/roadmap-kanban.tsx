@@ -138,7 +138,9 @@ export default function RoadmapKanban({ feedback, projectSlug }: RoadmapKanbanPr
             key={status.id}
             className='flex min-w-[280px] flex-col gap-3'
             onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, status.id)}>
+            onDrop={(e) => {
+              handleDrop(e, status.id);
+            }}>
             {/* Column Header */}
             <div className='flex items-center justify-between rounded-lg bg-secondary/50 px-3 py-2'>
               <div className='flex items-center gap-2'>
@@ -156,7 +158,9 @@ export default function RoadmapKanban({ feedback, projectSlug }: RoadmapKanbanPr
                 <Card
                   key={item.id}
                   draggable
-                  onDragStart={(e) => handleDragStart(e, item.id)}
+                  onDragStart={(e) => {
+                    handleDragStart(e, item.id);
+                  }}
                   className='cursor-move transition-shadow hover:shadow-md'>
                   <CardContent className='p-4'>
                     <h4 className='mb-2 font-medium'>{item.title}</h4>
@@ -168,18 +172,18 @@ export default function RoadmapKanban({ feedback, projectSlug }: RoadmapKanbanPr
                         <Heart className='h-4 w-4' />
                         <span className='text-sm'>{item.upvotes}</span>
                       </div>
-                      {item.tags && item.tags.length > 0 && (
+                      {item.tags && item.tags.length > 0 ? (
                         <div className='flex gap-1'>
-                          {item.tags.slice(0, 2).map((tag, idx) => (
+                          {item.tags.slice(0, 2).map((tag) => (
                             <span
-                              key={idx}
+                              key={tag.name}
                               className='rounded px-2 py-0.5 text-xs'
-                              style={{ backgroundColor: tag.color + '20', color: tag.color }}>
+                              style={{ backgroundColor: `${tag.color}20`, color: tag.color }}>
                               {tag.name}
                             </span>
                           ))}
                         </div>
-                      )}
+                      ) : null}
                     </div>
                   </CardContent>
                 </Card>
