@@ -33,7 +33,7 @@ export default function NavTabs({
   }, [pathname, tabs]);
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-1'>
       {tabs.map((tab, index) => (
         // If roadmap, don't link to the page
         <Link
@@ -41,7 +41,7 @@ export default function NavTabs({
           key={tab.slug}
           className={tab.slug === 'feedback' || tab.slug === 'roadmap' ? 'cursor-default' : ''}>
           <Button
-            variant='secondary'
+            variant='ghost'
             onMouseEnter={() => {
               setIsHover(tab.slug);
             }}
@@ -49,16 +49,16 @@ export default function NavTabs({
               setIsHover('');
             }}
             className={cn(
-              'text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light',
-              activeTab === index && 'bg-secondary text-foreground hover:bg-secondary'
+              'w-full items-center justify-start gap-3 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 rounded-md transition-colors',
+              activeTab === index && 'bg-gray-100 text-gray-900 hover:bg-gray-100'
             )}>
             {/* Icon */}
-            <div className='flex transform-none flex-row items-center justify-center p-1'>
+            <div className='flex transform-none flex-row items-center justify-center'>
               <LottiePlayer lottieSrc={tab.icon} animate={isHover === tab.slug} className='h-5 w-5' />
             </div>
 
             {/* Title */}
-            {tab.name}
+            <span>{tab.name}</span>
           </Button>
         </Link>
       ))}

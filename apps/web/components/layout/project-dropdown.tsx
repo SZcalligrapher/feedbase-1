@@ -30,7 +30,7 @@ export default function ProjectDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className={cn('h-9 w-full justify-between p-1', className)}>
+        <Button variant='outline' className={cn('h-9 w-full justify-between p-2 border-gray-200 bg-white hover:bg-gray-50', className)}>
           <div className='flex flex-row items-center justify-start gap-2'>
             {activeProject?.icon ? (
               <div className='ml-[2px] flex items-center justify-center'>
@@ -43,16 +43,16 @@ export default function ProjectDropdown({
                 />
               </div>
             ) : (
-              <div className='bg-accent flex flex-row items-center justify-center rounded-sm p-[6px]'>
-                <GlobeIcon className='text-foreground/70 h-4 w-4' />
+              <div className='bg-gray-100 flex flex-row items-center justify-center rounded-sm p-[6px]'>
+                <GlobeIcon className='text-gray-600 h-4 w-4' />
               </div>
             )}
             {/* While selected project is null (incase of unexpected error), show skeleton */}
-            <span className='text-sm font-normal'>
+            <span className='text-sm font-medium text-gray-900'>
               {selectedProject ? selectedProject.name : <Skeleton className='h-4 w-20' />}
             </span>
           </div>
-          <ChevronsUpDownIcon className='text-foreground/70 h-4 w-4' />
+          <ChevronsUpDownIcon className='text-gray-500 h-4 w-4' />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn('w-[200px] justify-between', className)}>
@@ -67,10 +67,10 @@ export default function ProjectDropdown({
                 <Image src={project.icon} width={22} height={22} className='rounded-sm' alt='Project Icon' />
               ) : (
                 <div className='flex items-center justify-center rounded-sm px-[3.5px]'>
-                  <GlobeIcon className='text-foreground/70 h-4 w-4' />
+                  <GlobeIcon className='text-gray-600 h-4 w-4' />
                 </div>
               )}
-              {project.name}
+              <span className='text-gray-900'>{project.name}</span>
             </DropdownMenuItem>
           </Link>
         ))}
@@ -81,8 +81,8 @@ export default function ProjectDropdown({
                 event.preventDefault();
               }}>
               <div className='flex flex-row items-center gap-3 pl-[3.5px]'>
-                <Plus className='text-foreground/70 h-4 w-4' />
-                New Project
+                <Plus className='text-gray-600 h-4 w-4' />
+                <span className='text-gray-900'>New Project</span>
               </div>
             </DropdownMenuItem>
           }
