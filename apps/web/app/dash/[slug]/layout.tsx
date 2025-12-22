@@ -13,7 +13,6 @@ import {
   SettingsIcon,
   TagLabelIcon,
 } from '@/components/shared/icons/icons-animated';
-import { Icons } from '@/components/shared/icons/icons-static';
 import UserDropdown from '@/components/shared/user-dropdown';
 
 const tabs = [
