@@ -35,6 +35,11 @@ export function UserAuthForm({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
+  // Use NEXT_PUBLIC_SITE_URL if available, otherwise build from NEXT_PUBLIC_ROOT_DOMAIN
+  // This ensures the redirect URL is always the production domain, not the current origin
+  const ROOT_URL =
+    process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`;
+
   async function handleMailSignIn(event: React.SyntheticEvent) {
     setIsLoading(true);
 
@@ -67,7 +72,7 @@ export function UserAuthForm({
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback?successRedirect=${
+        emailRedirectTo: `${ROOT_URL}/auth/callback?successRedirect=${
           successRedirect || location.origin
         }`,
         data: {
@@ -94,7 +99,9 @@ export function UserAuthForm({
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${location.origin}/auth/callback?successRedirect=${successRedirect || location.origin}`,
+        redirectTo: `${ROOT_URL}/auth/callback?successRedirect=${
+          successRedirect || location.origin
+        }`,
       },
     });
 
