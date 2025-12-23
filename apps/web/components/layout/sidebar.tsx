@@ -29,26 +29,28 @@ export default async function Sidebar({
         {/* Projects */}
         <ProjectDropdown projects={projects} activeProject={currentProject} />
 
-        {/* Main Tabs */}
-        <NavTabs tabs={tabs} initialTabIndex={activeTabIndex} projectSlug={currentProject.slug} />
+        {/* Main Tabs with My Board */}
+        <div className='flex flex-col gap-2'>
+          <NavTabs tabs={tabs} initialTabIndex={activeTabIndex} projectSlug={currentProject.slug} />
+          
+          {/* My Board Button */}
+          <a href={feedbackUrl} target='_blank' rel='noopener noreferrer'>
+            <Button
+              variant='secondary'
+              className={cn(
+                'text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light',
+                isFeedbackPage && 'bg-secondary text-foreground hover:bg-secondary'
+              )}>
+              {/* Icon */}
+              <div className='flex transform-none flex-row items-center justify-center p-1'>
+                <Clipboard className='h-5 w-5' />
+              </div>
 
-        {/* My Board Button */}
-        <a href={feedbackUrl} target='_blank' rel='noopener noreferrer'>
-          <Button
-            variant='secondary'
-            className={cn(
-              'text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light',
-              isFeedbackPage && 'bg-secondary text-foreground hover:bg-secondary'
-            )}>
-            {/* Icon */}
-            <div className='flex transform-none flex-row items-center justify-center p-1'>
-              <Clipboard className='h-5 w-5' />
-            </div>
-
-            {/* Title */}
-            My Board
-          </Button>
-        </a>
+              {/* Title */}
+              My Board
+            </Button>
+          </a>
+        </div>
       </div>
     </div>
   );
