@@ -17,6 +17,13 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest) {
+  // Create a mutable response object that will be used to store cookies
+  let response = NextResponse.next({
+    request: {
+      headers: req.headers,
+    },
+  });
+
   // Create a Supabase client configured to use cookies
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -27,27 +34,31 @@ export default async function middleware(req: NextRequest) {
           return req.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
+          // Set cookie on the request for immediate access
           req.cookies.set({
             name,
             value,
             ...options,
           });
-          NextResponse.next({
-            request: {
-              headers: req.headers,
-            },
+          // Set cookie on the response to persist it
+          response.cookies.set({
+            name,
+            value,
+            ...options,
           });
         },
         remove(name: string, options: CookieOptions) {
+          // Remove cookie from request
           req.cookies.set({
             name,
             value: '',
             ...options,
           });
-          NextResponse.next({
-            request: {
-              headers: req.headers,
-            },
+          // Remove cookie from response
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
           });
         },
       },
@@ -94,21 +105,26 @@ export default async function middleware(req: NextRequest) {
     }
 
     // If the project exists, rewrite the request to the project's folder
-    return NextResponse.rewrite(
-      new URL(
-        `/${data?.project?.slug}${path}${
-          req.nextUrl.searchParams ? `?${req.nextUrl.searchParams.toString()}` : ''
-        }`,
-        req.url
-      ),
-      {
-        headers: {
-          'x-pathname': path,
-          'x-project': data?.project?.slug,
-          'x-powered-by': 'Feedbase',
-        },
-      }
+    const rewriteUrl = new URL(
+      `/${data?.project?.slug}${path}${
+        req.nextUrl.searchParams ? `?${req.nextUrl.searchParams.toString()}` : ''
+      }`,
+      req.url
     );
+    // Create rewrite response and copy cookies from our response object
+    const rewriteResponse = NextResponse.rewrite(rewriteUrl, {
+      request: {
+        headers: req.headers,
+      },
+    });
+    // Copy cookies from response to rewriteResponse
+    response.cookies.getAll().forEach((cookie) => {
+      rewriteResponse.cookies.set(cookie);
+    });
+    rewriteResponse.headers.set('x-pathname', path);
+    rewriteResponse.headers.set('x-project', data?.project?.slug);
+    rewriteResponse.headers.set('x-powered-by', 'Feedbase');
+    return rewriteResponse;
   }
 
   // rewrites for dash pages
@@ -123,48 +139,73 @@ export default async function middleware(req: NextRequest) {
     }
 
     // rewrite / to /dash
-    return NextResponse.rewrite(new URL(`/dash${path === '/' ? '' : path}`, req.url), {
-      headers: {
-        'x-pathname': path,
-        'x-project': path.split('/')[1],
+    const dashRewriteUrl = new URL(`/dash${path === '/' ? '' : path}`, req.url);
+    const dashRewriteResponse = NextResponse.rewrite(dashRewriteUrl, {
+      request: {
+        headers: req.headers,
       },
     });
+    // Copy cookies from response to dashRewriteResponse
+    response.cookies.getAll().forEach((cookie) => {
+      dashRewriteResponse.cookies.set(cookie);
+    });
+    dashRewriteResponse.headers.set('x-pathname', path);
+    dashRewriteResponse.headers.set('x-project', path.split('/')[1]);
+    return dashRewriteResponse;
   }
 
   // rewrite root application to `/home` folder
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
-      headers: {
-        'x-pathname': path,
-        'x-project': path.split('/')[1],
+    const homeRewriteUrl = new URL(`/home${path === '/' ? '' : path}`, req.url);
+    const homeRewriteResponse = NextResponse.rewrite(homeRewriteUrl, {
+      request: {
+        headers: req.headers,
       },
     });
+    // Copy cookies from response to homeRewriteResponse
+    response.cookies.getAll().forEach((cookie) => {
+      homeRewriteResponse.cookies.set(cookie);
+    });
+    homeRewriteResponse.headers.set('x-pathname', path);
+    homeRewriteResponse.headers.set('x-project', path.split('/')[1]);
+    return homeRewriteResponse;
   }
 
   // rewrite /api to `/api` folder
   if (hostname === `api.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    return NextResponse.rewrite(new URL(`/api${path}`, req.url), {
-      headers: {
-        'x-pathname': path,
-        'x-project': path.split('/')[1],
+    const apiRewriteUrl = new URL(`/api${path}`, req.url);
+    const apiRewriteResponse = NextResponse.rewrite(apiRewriteUrl, {
+      request: {
+        headers: req.headers,
       },
     });
+    // Copy cookies from response to apiRewriteResponse
+    response.cookies.getAll().forEach((cookie) => {
+      apiRewriteResponse.cookies.set(cookie);
+    });
+    apiRewriteResponse.headers.set('x-pathname', path);
+    apiRewriteResponse.headers.set('x-project', path.split('/')[1]);
+    return apiRewriteResponse;
   }
 
   // rewrite everything else to `/[sub-domain]/[path] dynamic route
-  return NextResponse.rewrite(
-    new URL(
-      `/${hostname.split('.')[0]}${path}${
-        req.nextUrl.searchParams ? `?${req.nextUrl.searchParams.toString()}` : ''
-      }`,
-      req.url
-    ),
-    {
-      headers: {
-        'x-pathname': path,
-        'x-project': hostname.split('.')[0],
-        'x-powered-by': 'Feedbase',
-      },
-    }
+  const subdomainRewriteUrl = new URL(
+    `/${hostname.split('.')[0]}${path}${
+      req.nextUrl.searchParams ? `?${req.nextUrl.searchParams.toString()}` : ''
+    }`,
+    req.url
   );
+  const subdomainRewriteResponse = NextResponse.rewrite(subdomainRewriteUrl, {
+    request: {
+      headers: req.headers,
+    },
+  });
+  // Copy cookies from response to subdomainRewriteResponse
+  response.cookies.getAll().forEach((cookie) => {
+    subdomainRewriteResponse.cookies.set(cookie);
+  });
+  subdomainRewriteResponse.headers.set('x-pathname', path);
+  subdomainRewriteResponse.headers.set('x-project', hostname.split('.')[0]);
+  subdomainRewriteResponse.headers.set('x-powered-by', 'Feedbase');
+  return subdomainRewriteResponse;
 }
