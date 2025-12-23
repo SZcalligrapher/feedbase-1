@@ -1,6 +1,11 @@
+import { headers } from 'next/headers';
+import Link from 'next/link';
+import { Clipboard } from 'lucide-react';
 import { NavbarTabProps, ProjectProps } from '@/lib/types';
 import NavTabs from '@/components/layout/nav-tabs';
 import ProjectDropdown from '@/components/layout/project-dropdown';
+import { Button } from 'ui/components/ui/button';
+import { cn } from '@ui/lib/utils';
 
 export default async function Sidebar({
   tabs,
@@ -13,6 +18,10 @@ export default async function Sidebar({
   activeTabIndex: number;
   currentProject: ProjectProps['Row'];
 }) {
+  const headerList = headers();
+  const pathname = headerList.get('x-pathname') || '';
+  const isFeedbackPage = pathname.includes('/feedback');
+
   return (
     <div className='fixed left-0 top-0 z-50 hidden h-screen w-[240px] flex-col items-center justify-between md:flex'>
       <div className='flex w-full flex-col gap-y-10 p-5'>
@@ -22,37 +31,26 @@ export default async function Sidebar({
         {/* Main Tabs */}
         <NavTabs tabs={tabs} initialTabIndex={activeTabIndex} projectSlug={currentProject.slug} />
       </div>
+      
       {/* Footer Buttons */}
-      {/* <div className='flex w-full flex-col'>
-        <Link href='https://github.com/chroxify/feedbase/issues/new' rel='noopener noreferrer' target='_blank'>
+      <div className='flex w-full flex-col gap-2 p-5'>
+        <Link href={`/${currentProject.slug}/feedback`}>
           <Button
             variant='secondary'
-            className='w-full items-center justify-start  gap-1 border border-transparent p-1 text-secondary-foreground/50 hover:text-secondary-foreground hover:bg-transparent font-light group'>
-            <div className='flex flex-row items-center justify-center p-[6px]'>
-              <LottiePlayer 
-              lottieSrc={ChatIcon}
-              animate={true}
-              className='h-5 w-5'
-              /> 
-              <ExclamationCircleIcon className='h-5 w-5' />
-              <Icons.chat className='h-[18px] w-[18px] fill-secondary-foreground/50 group-hover:fill-secondary-foreground transition-colors' />
+            className={cn(
+              'text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light',
+              isFeedbackPage && 'bg-secondary text-foreground hover:bg-secondary'
+            )}>
+            {/* Icon */}
+            <div className='flex transform-none flex-row items-center justify-center p-1'>
+              <Clipboard className='h-5 w-5' />
             </div>
-            Feedback
+
+            {/* Title */}
+            My Board
           </Button>
         </Link>
-        
-        <form action='/auth/sign-out' method='post'>
-          <Button
-            variant='secondary'
-            className='w-full items-center justify-start  gap-1 border border-transparent p-1 text-secondary-foreground/40 hover:bg-transparent hover:text-secondary-foreground/90'>
-            <div className='flex flex-row items-center justify-center p-[6px]'>
-              <LogOut className='h-5 w-5' />
-            </div>
-            Sign out
-          </Button>
-        </form>
-      </div> */}
-      {/* <ToggleThemeButton /> */}
+      </div>
     </div>
   );
 }
