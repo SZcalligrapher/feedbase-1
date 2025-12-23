@@ -40,25 +40,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const tabs = [
+const getTabs = (projectSlug: string) => [
   {
     name: 'Feedback',
-    link: '/feedback',
+    link: `/${projectSlug}/feedback`,
   },
   {
     name: 'Changelog',
-    link: '/changelog',
+    link: `/${projectSlug}/changelog`,
   },
 ];
 
 export default async function HubLayout({ children, params }: Props) {
   const headerList = headers();
-  const pathname = headerList.get('x-pathname');
+  const pathname = headerList.get('x-pathname') || '';
   const hostname = headerList.get('host');
-  const currentTab = tabs.find((tab) => tab.link === `/${pathname!.split('/')[1]}`);
+  
+  const tabs = getTabs(params.project);
+  
+  // Find current tab based on full pathname (e.g., /achiva/feedback)
+  const currentTab = tabs.find((tab) => pathname === tab.link || pathname.startsWith(tab.link)) || tabs[0];
 
-  if (!currentTab) {
-    redirect('/feedback');
+  // If pathname doesn't match any tab and is not empty, redirect to feedback
+  if (pathname && !tabs.some((tab) => pathname === tab.link || pathname.startsWith(tab.link))) {
+    redirect(`/${params.project}/feedback`);
   }
 
   // Get project data
@@ -82,7 +87,10 @@ export default async function HubLayout({ children, params }: Props) {
 
   // Check if any modules are disabled and remove them from the tabs
   if (!config.changelog_enabled) {
-    tabs.splice(1, 1);
+    const changelogTabIndex = tabs.findIndex((tab) => tab.name === 'Changelog');
+    if (changelogTabIndex >= 0) {
+      tabs.splice(changelogTabIndex, 1);
+    }
   }
 
   // Get current user

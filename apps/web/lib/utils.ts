@@ -10,9 +10,18 @@ export function isSlugValid(slug: string) {
 export function formatRootUrl(subdomain?: string, path?: string) {
   const protocol = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? 'https' : 'http';
 
-  return `${protocol}://${subdomain ? `${subdomain}.` : ''}${process.env.NEXT_PUBLIC_ROOT_DOMAIN}${
-    path ? path : ''
-  }`;
+  // Special handling for 'dash' subdomain - keep it as subdomain
+  if (subdomain === 'dash' || subdomain === 'api' || subdomain === 'docs') {
+    return `${protocol}://${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}${path ? path : ''}`;
+  }
+
+  // For project slugs, use path-based routing: inhau.co/slug/path
+  if (subdomain) {
+    return `${protocol}://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${subdomain}${path ? path : ''}`;
+  }
+
+  // For root domain without subdomain
+  return `${protocol}://${process.env.NEXT_PUBLIC_ROOT_DOMAIN}${path ? path : ''}`;
 }
 
 /* eslint-disable */
