@@ -7,13 +7,11 @@ import NavbarMobile from '@/components/layout/nav-bar-mobile';
 import Sidebar from '@/components/layout/sidebar';
 import TitleProvider from '@/components/layout/title-provider';
 import {
-  AnalyticsIcon,
   CalendarIcon,
   FeedbackIcon,
   SettingsIcon,
   TagLabelIcon,
 } from '@/components/shared/icons/icons-animated';
-import { Icons } from '@/components/shared/icons/icons-static';
 import UserDropdown from '@/components/shared/user-dropdown';
 
 const tabs = [
@@ -28,14 +26,9 @@ const tabs = [
     slug: 'feedback',
   },
   {
-    name: 'Roadmap (Soon)',
+    name: 'Roadmap',
     icon: CalendarIcon,
     slug: 'roadmap',
-  },
-  {
-    name: 'Analytics',
-    icon: AnalyticsIcon,
-    slug: 'analytics',
   },
   {
     name: 'Settings',
@@ -77,47 +70,38 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const activeTabIndex = tabs.findIndex((tab) => pathname?.includes(tab.slug));
 
   return (
-    <main className='bg-root flex min-h-screen w-full min-w-full justify-center overflow-hidden'>
-      <div className='flex h-full w-full flex-col items-center lg:max-w-screen-xl'>
-        {/* Header with logo and hub button */}
-        {/* BUG: Find a way to solve issue of scroll bar getting removed on avatar dialog open */}
-        {/* https://github.com/radix-ui/primitives/discussions/1100 */}
-        <div className='bg-root fixed top-0 z-50 flex h-16 w-full flex-row items-center justify-between overflow-y-auto px-5 lg:max-w-screen-xl'>
-          {/* Logo */}
-          <Icons.LogoText className='fill-foreground hidden h-9 pl-1 md:block' />
-          <TitleProvider
-            tabs={tabs}
-            initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
-            className='text-2xl font-semibold md:hidden'
-          />
+    <main className='bg-root flex min-h-screen w-full min-w-full overflow-hidden'>
+      {/* Sidebar - Fixed on the left */}
+      <Sidebar
+        tabs={tabs}
+        projects={projects}
+        activeTabIndex={activeTabIndex}
+        currentProject={currentProject}
+      />
+
+      {/* Main Content Area */}
+      <div className='flex flex-1 flex-col ml-[240px]'>
+        {/* Header - Fixed at top right */}
+        <header className='bg-root fixed top-0 right-0 z-50 flex h-16 w-[calc(100%-240px)] flex-row items-center justify-end px-5'>
           <div className='flex flex-row items-center gap-2'>
             <InboxPopover user={user} />
             <UserDropdown user={user} />
           </div>
-        </div>
-        <div className='flex h-full w-full flex-row justify-start p-5 pt-[64px]'>
-          {/* Sidebar */}
-          <Sidebar
+        </header>
+
+        {/* Page Content */}
+        <div className='flex-1 pt-16 p-5 overflow-y-auto'>
+          <TitleProvider
             tabs={tabs}
-            projects={projects}
-            activeTabIndex={activeTabIndex}
-            currentProject={currentProject}
+            initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
+            className='text-3xl font-semibold mb-6'
           />
-
-          {/* Main content */}
-          <div className='flex w-full flex-col items-start justify-start overflow-hidden pb-20 md:pb-0 md:pl-[240px]'>
-            <TitleProvider
-              tabs={tabs}
-              initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
-              className='hidden text-3xl font-semibold md:block'
-            />
-            {children}
-          </div>
+          {children}
         </div>
-
-        {/* Navbar (mobile) */}
-        <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
       </div>
+
+      {/* Navbar (mobile) */}
+      <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
     </main>
   );
 }

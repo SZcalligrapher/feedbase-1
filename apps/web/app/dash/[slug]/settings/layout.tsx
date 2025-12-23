@@ -14,10 +14,6 @@ const tabs = [
     name: 'Team',
     slug: 'team',
   },
-  {
-    name: 'Integrations',
-    slug: 'integrations',
-  },
 ];
 
 export default function SettingsLayout({

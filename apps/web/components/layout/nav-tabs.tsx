@@ -35,11 +35,10 @@ export default function NavTabs({
   return (
     <div className='flex flex-col gap-2'>
       {tabs.map((tab, index) => (
-        // If roadmap, don't link to the page
         <Link
-          href={tab.slug === 'roadmap' ? '#' : `/${projectSlug}/${tab.slug}`}
+          href={`/${projectSlug}/${tab.slug}`}
           key={tab.slug}
-          className={tab.slug === 'feedback' || tab.slug === 'roadmap' ? 'cursor-default' : ''}>
+          className={tab.slug === 'feedback' ? 'cursor-default' : ''}>
           <Button
             variant='secondary'
             onMouseEnter={() => {

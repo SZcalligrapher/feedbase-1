@@ -14,8 +14,8 @@ export default async function Sidebar({
   currentProject: ProjectProps['Row'];
 }) {
   return (
-    <div className='fixed z-50 hidden h-full min-w-[200px] flex-col items-center justify-between md:flex'>
-      <div className='flex w-full flex-col gap-y-10'>
+    <div className='fixed left-0 top-0 z-50 hidden h-screen w-[240px] flex-col items-center justify-between md:flex'>
+      <div className='flex w-full flex-col gap-y-10 p-5'>
         {/* Projects */}
         <ProjectDropdown projects={projects} activeProject={currentProject} />
 
