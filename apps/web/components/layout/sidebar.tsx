@@ -1,11 +1,11 @@
 import { headers } from 'next/headers';
-import Link from 'next/link';
 import { Clipboard } from 'lucide-react';
 import { NavbarTabProps, ProjectProps } from '@/lib/types';
 import NavTabs from '@/components/layout/nav-tabs';
 import ProjectDropdown from '@/components/layout/project-dropdown';
 import { Button } from 'ui/components/ui/button';
 import { cn } from '@ui/lib/utils';
+import { formatRootUrl } from '@/lib/utils';
 
 export default async function Sidebar({
   tabs,
@@ -21,6 +21,7 @@ export default async function Sidebar({
   const headerList = headers();
   const pathname = headerList.get('x-pathname') || '';
   const isFeedbackPage = pathname.includes('/feedback');
+  const feedbackUrl = formatRootUrl(currentProject.slug, '/feedback');
 
   return (
     <div className='fixed left-0 top-0 z-50 hidden h-screen w-[240px] flex-col items-center justify-between md:flex'>
@@ -30,11 +31,9 @@ export default async function Sidebar({
 
         {/* Main Tabs */}
         <NavTabs tabs={tabs} initialTabIndex={activeTabIndex} projectSlug={currentProject.slug} />
-      </div>
-      
-      {/* Footer Buttons */}
-      <div className='flex w-full flex-col gap-2 p-5'>
-        <Link href={`/${currentProject.slug}/feedback`}>
+
+        {/* My Board Button */}
+        <a href={feedbackUrl} target='_blank' rel='noopener noreferrer'>
           <Button
             variant='secondary'
             className={cn(
@@ -49,7 +48,7 @@ export default async function Sidebar({
             {/* Title */}
             My Board
           </Button>
-        </Link>
+        </a>
       </div>
     </div>
   );
