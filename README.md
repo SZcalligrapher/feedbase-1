@@ -22,6 +22,7 @@
 
 Feedbase is an open-source product management tool that helps products to enhance customer relationships through its robust features. It enables efficient capturing, prioritization, and resolution of customer issues, while also providing valuable insights into your product's status.
 
+
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/) – Framework
