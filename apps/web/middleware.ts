@@ -133,16 +133,6 @@ export default async function middleware(req: NextRequest) {
 
   // rewrite root application to `/home` folder
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    // Handle OAuth callback: if root path has 'code' parameter, redirect to /auth/callback
-    if (path === '/' && url.searchParams.has('code')) {
-      const callbackUrl = new URL('/auth/callback', req.url);
-      // Copy all query parameters to callback URL
-      url.searchParams.forEach((value, key) => {
-        callbackUrl.searchParams.set(key, value);
-      });
-      return NextResponse.redirect(callbackUrl);
-    }
-    
     return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
       headers: {
         'x-pathname': path,
