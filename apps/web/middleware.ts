@@ -133,32 +133,12 @@ export default async function middleware(req: NextRequest) {
 
   // rewrite root application to `/home` folder
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    // Check if path starts with a project slug (not /home, /dash, /api, etc.)
-    const pathSegments = path.split('/').filter(Boolean);
-    const firstSegment = pathSegments[0];
-    
-    // If path starts with known routes, rewrite to /home
-    if (firstSegment === 'home' || firstSegment === 'dash' || firstSegment === 'api' || firstSegment === 'auth') {
-      return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
-        headers: {
-          'x-pathname': path,
-          'x-project': path.split('/')[1],
-        },
-      });
-    }
-    
-    // Otherwise, let it pass through to [project] dynamic route
-    // The path will be like /achiva/feedback, which matches [project]/feedback
-    // Extract project slug from path for header
-    const projectSlug = pathSegments[0];
-    const res = NextResponse.next({
-      request: {
-        headers: req.headers,
+    return NextResponse.rewrite(new URL(`/home${path === '/' ? '' : path}`, req.url), {
+      headers: {
+        'x-pathname': path,
+        'x-project': path.split('/')[1],
       },
     });
-    res.headers.set('x-pathname', path);
-    res.headers.set('x-project', projectSlug || '');
-    return res;
   }
 
   // rewrite /api to `/api` folder
@@ -171,12 +151,20 @@ export default async function middleware(req: NextRequest) {
     });
   }
 
-  // For other subdomains (like dash.inhau.co), handle them separately
-  // But for project subdomains, we no longer support them - redirect to path-based URLs
-  // This allows Vercel to handle routing without nameserver configuration
-  return NextResponse.next({
-    request: {
-      headers: req.headers,
-    },
-  });
+  // rewrite everything else to `/[sub-domain]/[path] dynamic route
+  return NextResponse.rewrite(
+    new URL(
+      `/${hostname.split('.')[0]}${path}${
+        req.nextUrl.searchParams ? `?${req.nextUrl.searchParams.toString()}` : ''
+      }`,
+      req.url
+    ),
+    {
+      headers: {
+        'x-pathname': path,
+        'x-project': hostname.split('.')[0],
+        'x-powered-by': 'Feedbase',
+      },
+    }
+  );
 }
