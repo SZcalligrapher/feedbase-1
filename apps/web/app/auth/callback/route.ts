@@ -36,7 +36,5 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  // Default to /dash if no redirect is specified
-  const redirectUrl = redirect || '/dash';
-  return NextResponse.redirect(new URL(redirectUrl, requestUrl.origin));
+  return NextResponse.redirect(new URL(redirect || '/', requestUrl.origin));
 }
