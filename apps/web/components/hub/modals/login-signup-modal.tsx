@@ -1,7 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import { DASH_DOMAIN } from '@/lib/constants';
+import { useState } from 'react';
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogTrigger,
+} from '@ui/components/ui/responsive-dialog';
+import { Separator } from '@ui/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui/components/ui/tabs';
+import { UserAuthForm } from '@/components/user-auth-form';
 
 export default function AuthModal({
   projectSlug,
@@ -12,15 +22,36 @@ export default function AuthModal({
   children: React.ReactNode;
   disabled?: boolean;
 }) {
-  // If disabled is true, user is logged in or action is allowed, show children directly
-  if (disabled === true) {
-    return <>{children}</>;
-  }
+  const [authType, setAuthType] = useState<'sign-in' | 'sign-up'>('sign-in');
 
-  // If disabled is false or undefined, user needs to login, redirect to signup page instead of showing modal
   return (
-    <Link href={`${DASH_DOMAIN}/signup`} className='contents'>
-      {children}
-    </Link>
+    <ResponsiveDialog open={disabled ? false : undefined}>
+      <ResponsiveDialogTrigger asChild>{children}</ResponsiveDialogTrigger>
+      <ResponsiveDialogContent className='pb-4 sm:max-w-[425px] sm:p-10 sm:py-14'>
+        <ResponsiveDialogHeader className='flex flex-col items-center space-y-2'>
+          <ResponsiveDialogTitle>{authType === 'sign-in' ? 'Sign In' : 'Sign Up'}</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className='text-center'>
+            {authType === 'sign-in' ? 'Sign in' : 'Sign up'} with your email address to continue.
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
+        <Tabs
+          defaultValue='sign-in'
+          onValueChange={(value) => {
+            setAuthType(value as 'sign-in' | 'sign-up');
+          }}>
+          <TabsList className='bg-secondary/30 grid w-full grid-cols-2 font-light'>
+            <TabsTrigger value='sign-in'>Sign In</TabsTrigger>
+            <TabsTrigger value='sign-up'>Sign Up</TabsTrigger>
+          </TabsList>
+          <Separator className='bg-border my-4' />
+          <TabsContent value='sign-in'>
+            <UserAuthForm authType='sign-in' buttonsClassname='bg-secondary/30 border-border/50' />
+          </TabsContent>
+          <TabsContent value='sign-up'>
+            <UserAuthForm authType='sign-up' buttonsClassname='bg-secondary/30 border-border/50' />
+          </TabsContent>
+        </Tabs>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
