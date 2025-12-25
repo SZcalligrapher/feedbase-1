@@ -73,7 +73,7 @@ export async function POST(req: Request) {
   );
 
   // Call the function to generate new invite code
-  const { data, error } = await supabase.rpc('generate_daily_invite_code');
+  const { error } = await supabase.rpc('generate_daily_invite_code');
 
   if (error) {
     return NextResponse.json({ error: error.message || 'Failed to generate invite code' }, { status: 500 });
