@@ -4,9 +4,9 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Feedbase",
-    "short_name": "Feedbase",
-    "description": "The open-source solution for collecting feedback & communicating product updates.",
+    "name": "inhau",
+    "short_name": "inhau",
+    "description": "Collect feedback & communicate product updates with ease.",
     "icons": [
       {
         "src": "/icon-192x192.png",

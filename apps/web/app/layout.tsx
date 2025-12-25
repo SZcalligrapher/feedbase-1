@@ -8,7 +8,7 @@ import { Toaster } from 'sonner';
 import { formatRootUrl } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Feedbase',
+  title: 'inhau',
   description: 'Collect feedback & communicate product updates with ease.',
   metadataBase: new URL(formatRootUrl()),
   openGraph: {
