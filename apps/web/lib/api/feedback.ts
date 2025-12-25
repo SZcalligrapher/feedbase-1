@@ -16,7 +16,8 @@ export const createFeedback = (
   data: FeedbackWithUserInputProps,
   cType: 'server' | 'route'
 ) =>
-  withProjectAuth<FeedbackProps['Row']>(async (user, supabase, project, error) => {
+  withProjectAuth<FeedbackProps['Row']>(
+    async (user, supabase, project, error) => {
     // If any errors, return error
     if (error) {
       return { data: null, error };
@@ -261,19 +262,21 @@ export const createFeedback = (
       });
     }
 
-    // Create project notification
-    waitUntil(async () => {
-      await supabase
-        .from('notifications')
-        .insert({
-          type: 'post',
-          project_id: project!.id,
-          initiator_id: user!.id,
-          feedback_id: feedbackData.id,
-        })
-        .select()
-        .single();
-    });
+    // Create project notification (only if user is logged in)
+    if (user) {
+      waitUntil(async () => {
+        await supabase
+          .from('notifications')
+          .insert({
+            type: 'post',
+            project_id: project!.id,
+            initiator_id: user.id,
+            feedback_id: feedbackData.id,
+          })
+          .select()
+          .single();
+      });
+    }
 
     // Return feedback
     return { data: feedback, error: null };

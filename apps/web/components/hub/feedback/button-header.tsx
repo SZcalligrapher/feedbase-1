@@ -101,19 +101,11 @@ export default function FeedbackHeader({
             <Search className='text-foreground/50 absolute left-3 h-4 w-4' />
           </div>
 
-          {isLoggedIn ? (
-            <CreatePostModal projectSlug={projectSlug}>
-              <Button variant='default' className='font-base shrink-0 text-sm'>
-                Create Post
-              </Button>
-            </CreatePostModal>
-          ) : (
-            <AuthModal projectSlug={projectSlug}>
-              <Button variant='default' className='font-base shrink-0 text-sm'>
-                Create Post
-              </Button>
-            </AuthModal>
-          )}
+          <CreatePostModal projectSlug={projectSlug} isLoggedIn={isLoggedIn}>
+            <Button variant='default' className='font-base shrink-0 text-sm'>
+              Create Post
+            </Button>
+          </CreatePostModal>
         </div>
       </div>
     </>

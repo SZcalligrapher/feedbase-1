@@ -19,18 +19,27 @@ import PostEditor from '@/components/shared/tiptap-editor';
 export default function CreatePostModal({
   projectSlug,
   children,
+  isLoggedIn,
 }: {
   projectSlug: string;
   children: React.ReactNode;
+  isLoggedIn?: boolean;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [authorName, setAuthorName] = useState<string>(''); // 留名输入框
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   // Submit post
   function onSubmit() {
+    // 如果未登录，检查留名是否填写
+    if (!isLoggedIn && !authorName.trim()) {
+      toast.error('Please enter your name');
+      return;
+    }
+
     // Set loading
     setIsLoading(true);
 
@@ -44,6 +53,13 @@ export default function CreatePostModal({
         body: JSON.stringify({
           title,
           description: content,
+          // 如果未登录，传递用户信息（留名）
+          user: !isLoggedIn
+            ? {
+                email: `anonymous-${Date.now()}@widget.local`, // 生成一个唯一的匿名邮箱
+                full_name: authorName.trim(),
+              }
+            : undefined,
         }),
       })
         .then((res) => res.json())
@@ -67,11 +83,17 @@ export default function CreatePostModal({
         // Set loading
         setIsLoading(false);
 
+        // Reset form
+        setTitle('');
+        setContent('');
+        setAuthorName('');
+
         // Reload comments
         router.refresh();
       })
       .catch((err) => {
         toast.error(err);
+        setIsLoading(false);
       });
   }
 
@@ -84,23 +106,45 @@ export default function CreatePostModal({
           <ResponsiveDialogDescription>Have an idea or found a bug? Let us know!</ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
         <div className='flex flex-col gap-4'>
-          {/* Project Name */}
+          {/* Author Name (only show if not logged in) */}
+          {!isLoggedIn && (
+            <div className='flex flex-col gap-2'>
+              <div className='flex flex-row items-center gap-2'>
+                <Label htmlFor='author-name'>Your Name</Label>
+                <span className='text-destructive text-xs'>*</span>
+              </div>
+
+              <Input
+                id='author-name'
+                placeholder='Enter your name'
+                value={authorName}
+                onChange={(event) => {
+                  setAuthorName(event.currentTarget.value);
+                }}
+                className='bg-secondary/30 font-light'
+                required
+              />
+            </div>
+          )}
+
+          {/* Title */}
           <div className='flex flex-col gap-2'>
             <div className='flex flex-row items-center gap-2'>
               <Label htmlFor='title'>Title</Label>
             </div>
 
             <Input
-              id='name'
+              id='title'
               placeholder='Your post title'
               value={title}
               onChange={(event) => {
-                setTitle(event.target.value);
+                setTitle(event.currentTarget.value);
               }}
               className='bg-secondary/30 font-light'
             />
           </div>
-          {/* Project Slug */}
+
+          {/* Description */}
           <div className='flex flex-col gap-2'>
             <div className='flex flex-row items-center gap-2'>
               <Label htmlFor='content'>Description</Label>
@@ -121,7 +165,12 @@ export default function CreatePostModal({
             variant='default'
             type='submit'
             onClick={onSubmit}
-            disabled={!title || content.replace(/<[^>]*>?/gm, '').length === 0 || isLoading}>
+            disabled={
+              !title ||
+              content.replace(/<[^>]*>?/gm, '').length === 0 ||
+              (!isLoggedIn && !authorName.trim()) ||
+              isLoading
+            }>
             {isLoading ? <Icons.Spinner className='mr-2 h-4 w-4 animate-spin' /> : null}
             Submit Post
           </Button>
