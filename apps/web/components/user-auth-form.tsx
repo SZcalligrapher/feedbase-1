@@ -18,7 +18,6 @@ export function UserAuthForm({
   buttonsClassname?: string;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [provider, setProvider] = useState<'github' | 'email'>('github');
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   // TODO: Figure out issue with cookieOptions setting and set at root level instead of individually like rn
@@ -39,7 +38,6 @@ export function UserAuthForm({
     setIsLoading(true);
 
     event.preventDefault();
-    setProvider('email');
 
     if (!name && authType === 'sign-up') {
       toast.error('Please enter your name!');
@@ -83,24 +81,6 @@ export function UserAuthForm({
     }
 
     setIsLoading(false);
-  }
-
-  async function handleGitHubSignIn(event: React.SyntheticEvent) {
-    setIsLoading(true);
-
-    event.preventDefault();
-    setProvider('github');
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: `${location.origin}/auth/callback?successRedirect=${successRedirect || location.origin}`,
-      },
-    });
-
-    if (error) {
-      toast.error(error.message);
-    }
   }
 
   return (
@@ -147,34 +127,11 @@ export function UserAuthForm({
             />
           </div>
           <Button disabled={isLoading}>
-            {isLoading && provider === 'email' ? (
-              <Icons.Spinner className='mr-2 h-4 w-4 animate-spin' />
-            ) : null}
+            {isLoading ? <Icons.Spinner className='mr-2 h-4 w-4 animate-spin' /> : null}
             Continue with Email
           </Button>
         </div>
       </form>
-      <div className='relative'>
-        <div className='absolute inset-0 flex items-center'>
-          <span className='w-full border-t' />
-        </div>
-        <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-root text-muted-foreground px-2'>Or continue with</span>
-        </div>
-      </div>
-      <Button
-        variant='outline'
-        type='button'
-        disabled={isLoading}
-        onClick={handleGitHubSignIn}
-        className={buttonsClassname}>
-        {isLoading && provider === 'github' ? (
-          <Icons.Spinner className='mr-2 h-4 w-4 animate-spin' />
-        ) : (
-          <Icons.Github className='mr-2 h-4 w-4' />
-        )}{' '}
-        Github
-      </Button>
     </div>
   );
 }
