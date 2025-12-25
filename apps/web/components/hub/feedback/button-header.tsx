@@ -9,7 +9,6 @@ import { Clock3, Flame, Search, Star } from 'lucide-react';
 import useCreateQueryString from '@/lib/hooks/use-create-query';
 import { ProjectConfigWithoutSecretProps } from '@/lib/types';
 import CreatePostModal from '../modals/create-post-modal';
-import AuthModal from '../modals/login-signup-modal';
 
 export default function FeedbackHeader({
   isLoggedIn,
