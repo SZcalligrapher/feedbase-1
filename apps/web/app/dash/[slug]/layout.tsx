@@ -6,6 +6,7 @@ import InboxPopover from '@/components/layout/inbox-popover';
 import NavbarMobile from '@/components/layout/nav-bar-mobile';
 import Sidebar from '@/components/layout/sidebar';
 import TitleProvider from '@/components/layout/title-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 import {
   CalendarIcon,
   FeedbackIcon,
@@ -70,38 +71,40 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const activeTabIndex = tabs.findIndex((tab) => pathname?.includes(tab.slug));
 
   return (
-    <main className='bg-root flex min-h-screen w-full min-w-full overflow-hidden'>
-      {/* Sidebar - Fixed on the left */}
-      <Sidebar
-        tabs={tabs}
-        projects={projects}
-        activeTabIndex={activeTabIndex}
-        currentProject={currentProject}
-      />
+    <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
+      <main className='bg-root flex min-h-screen w-full min-w-full overflow-hidden'>
+        {/* Sidebar - Fixed on the left */}
+        <Sidebar
+          tabs={tabs}
+          projects={projects}
+          activeTabIndex={activeTabIndex}
+          currentProject={currentProject}
+        />
 
-      {/* Main Content Area */}
-      <div className='flex flex-1 flex-col ml-[240px]'>
-        {/* Header - Fixed at top right */}
-        <header className='bg-root fixed top-0 right-0 z-50 flex h-16 w-[calc(100%-240px)] flex-row items-center justify-end px-5'>
-          <div className='flex flex-row items-center gap-2'>
-            <InboxPopover user={user} />
-            <UserDropdown user={user} />
+        {/* Main Content Area */}
+        <div className='flex flex-1 flex-col ml-[240px]'>
+          {/* Header - Fixed at top right */}
+          <header className='bg-root fixed top-0 right-0 z-50 flex h-16 w-[calc(100%-240px)] flex-row items-center justify-end px-5'>
+            <div className='flex flex-row items-center gap-2'>
+              <InboxPopover user={user} />
+              <UserDropdown user={user} />
+            </div>
+          </header>
+
+          {/* Page Content */}
+          <div className='flex-1 pt-16 p-5 overflow-y-auto'>
+            <TitleProvider
+              tabs={tabs}
+              initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
+              className='text-3xl font-semibold mb-6'
+            />
+            {children}
           </div>
-        </header>
-
-        {/* Page Content */}
-        <div className='flex-1 pt-16 p-5 overflow-y-auto'>
-          <TitleProvider
-            tabs={tabs}
-            initialTitle={activeTabIndex === -1 ? '' : tabs[activeTabIndex].name}
-            className='text-3xl font-semibold mb-6'
-          />
-          {children}
         </div>
-      </div>
 
-      {/* Navbar (mobile) */}
-      <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
-    </main>
+        {/* Navbar (mobile) */}
+        <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
+      </main>
+    </ThemeProvider>
   );
 }
