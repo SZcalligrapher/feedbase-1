@@ -9,7 +9,7 @@ import { satoshi } from '@ui/styles/fonts';
 import { ProfileProps, ProjectConfigWithoutSecretProps, ProjectProps } from '@/lib/types';
 import { hslToHex } from '@/lib/utils';
 import UserDropdown from '../shared/user-dropdown';
-import { DASH_DOMAIN } from '@/lib/constants';
+import AuthModal from './modals/login-signup-modal';
 
 interface TabProps {
   name: string;
@@ -81,13 +81,9 @@ export default function Header({
 
         {/* Login */}
         {!config.integration_sso_status && !user && (
-          <Button
-            variant='default'
-            onClick={() => {
-              window.location.href = `${DASH_DOMAIN}/login`;
-            }}>
-            Login
-          </Button>
+          <AuthModal projectSlug={project?.slug || ''}>
+            <Button variant='default'>Login</Button>
+          </AuthModal>
         )}
 
         {/* SSO */}
