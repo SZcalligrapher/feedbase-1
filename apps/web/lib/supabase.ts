@@ -468,6 +468,27 @@ export interface Database {
           },
         ];
       };
+      invite_codes: {
+        Row: {
+          code: string;
+          created_at: string;
+          id: string;
+          valid_date: string;
+        };
+        Insert: {
+          code: string;
+          created_at?: string;
+          id?: string;
+          valid_date: string;
+        };
+        Update: {
+          code?: string;
+          created_at?: string;
+          id?: string;
+          valid_date?: string;
+        };
+        Relationships: [];
+      };
       project_invites: {
         Row: {
           accepted: boolean;

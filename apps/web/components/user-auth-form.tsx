@@ -20,6 +20,7 @@ export function UserAuthForm({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [inviteCode, setInviteCode] = useState<string>('');
   // TODO: Figure out issue with cookieOptions setting and set at root level instead of individually like rn
   // {
   //   cookieOptions: {
@@ -47,6 +48,38 @@ export function UserAuthForm({
       toast.error('Please enter your email!');
       setIsLoading(false);
       return;
+    }
+
+    // Validate invite code for sign-up
+    if (authType === 'sign-up') {
+      if (!inviteCode) {
+        toast.error('Please enter your invite code!');
+        setIsLoading(false);
+        return;
+      }
+
+      // Verify invite code
+      try {
+        const response = await fetch('/api/v1/invite-code/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code: inviteCode }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.valid) {
+          toast.error(data.error || '邀请码无效或已过期');
+          setIsLoading(false);
+          return;
+        }
+      } catch (error) {
+        toast.error('验证邀请码时出错，请稍后重试');
+        setIsLoading(false);
+        return;
+      }
     }
 
     // Check if user exists
@@ -90,7 +123,7 @@ export function UserAuthForm({
           <div className='gap- grid gap-2'>
             {authType === 'sign-up' && (
               <>
-                <Label className='sr-only' htmlFor='email'>
+                <Label className='sr-only' htmlFor='name'>
                   Full Name
                 </Label>
                 <Input
@@ -104,6 +137,23 @@ export function UserAuthForm({
                   onChange={(event) => {
                     setName(event.currentTarget.value);
                   }}
+                  className={buttonsClassname}
+                />
+                <Label className='sr-only' htmlFor='invite-code'>
+                  Invite Code
+                </Label>
+                <Input
+                  id='invite-code'
+                  placeholder='Invite Code'
+                  type='text'
+                  autoCapitalize='characters'
+                  autoComplete='off'
+                  autoCorrect='off'
+                  disabled={isLoading}
+                  onChange={(event) => {
+                    setInviteCode(event.currentTarget.value.toUpperCase());
+                  }}
+                  value={inviteCode}
                   className={buttonsClassname}
                 />
               </>
