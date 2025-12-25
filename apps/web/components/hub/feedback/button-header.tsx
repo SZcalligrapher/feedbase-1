@@ -9,7 +9,7 @@ import { Clock3, Flame, Search, Star } from 'lucide-react';
 import useCreateQueryString from '@/lib/hooks/use-create-query';
 import { ProjectConfigWithoutSecretProps } from '@/lib/types';
 import CreatePostModal from '../modals/create-post-modal';
-import AuthModal from '../modals/login-signup-modal';
+import { DASH_DOMAIN } from '@/lib/constants';
 
 export default function FeedbackHeader({
   isLoggedIn,
@@ -108,11 +108,14 @@ export default function FeedbackHeader({
               </Button>
             </CreatePostModal>
           ) : (
-            <AuthModal projectSlug={projectSlug}>
-              <Button variant='default' className='font-base shrink-0 text-sm'>
-                Create Post
-              </Button>
-            </AuthModal>
+            <Button
+              variant='default'
+              className='font-base shrink-0 text-sm'
+              onClick={() => {
+                window.location.href = `${DASH_DOMAIN}/login`;
+              }}>
+              Create Post
+            </Button>
           )}
         </div>
       </div>
