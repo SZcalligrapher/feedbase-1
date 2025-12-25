@@ -314,28 +314,28 @@ export default function HubConfigCards({
                 <Button
                   size='icon'
                   className={cn(
-                    'bg-root hover:bg-root h-7 w-7 rounded-full border',
+                    'bg-foreground hover:bg-foreground h-7 w-7 rounded-full border',
                     projectConfig.custom_theme === 'default' && 'ring-border ring-2 ring-offset-2'
                   )}
                   onClick={() => {
                     setProjectConfig((prev) => ({ ...prev, custom_theme: 'default' }));
                   }}>
                   {projectConfig.custom_theme === 'default' && (
-                    <Check className='text-foreground h-3.5 w-3.5' />
+                    <Check className='text-background h-3.5 w-3.5' />
                   )}
-                  <span className='sr-only'>Light</span>
+                  <span className='sr-only'>Dark</span>
                 </Button>
 
                 <Button
                   size='icon'
                   className={cn(
-                    'h-7 w-7 rounded-full',
+                    'bg-background hover:bg-background h-7 w-7 rounded-full border border-border',
                     projectConfig.custom_theme === 'light' && 'ring-foreground ring-2 ring-offset-2'
                   )}
                   onClick={() => {
                     setProjectConfig((prev) => ({ ...prev, custom_theme: 'light' }));
                   }}>
-                  {projectConfig.custom_theme === 'light' && <Check className='h-3.5 w-3.5 text-black' />}
+                  {projectConfig.custom_theme === 'light' && <Check className='h-3.5 w-3.5 text-foreground' />}
                   <span className='sr-only'>Light</span>
                 </Button>
 
