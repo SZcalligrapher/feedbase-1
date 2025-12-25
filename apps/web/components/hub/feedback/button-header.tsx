@@ -2,14 +2,15 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@ui/components/ui/button';
 import { Input } from '@ui/components/ui/input';
 import { cn } from '@ui/lib/utils';
 import { Clock3, Flame, Search, Star } from 'lucide-react';
 import useCreateQueryString from '@/lib/hooks/use-create-query';
 import { ProjectConfigWithoutSecretProps } from '@/lib/types';
+import { DASH_DOMAIN } from '@/lib/constants';
 import CreatePostModal from '../modals/create-post-modal';
-import AuthModal from '../modals/login-signup-modal';
 
 export default function FeedbackHeader({
   isLoggedIn,
@@ -108,11 +109,11 @@ export default function FeedbackHeader({
               </Button>
             </CreatePostModal>
           ) : (
-            <AuthModal projectSlug={projectSlug}>
+            <Link href={`${DASH_DOMAIN}/signup`}>
               <Button variant='default' className='font-base shrink-0 text-sm'>
                 Create Post
               </Button>
-            </AuthModal>
+            </Link>
           )}
         </div>
       </div>
