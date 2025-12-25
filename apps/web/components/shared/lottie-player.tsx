@@ -54,20 +54,27 @@ export default function LottiePlayer({
           // Apply transform style
           lottiePlayerSvg?.setAttribute('style', transformStyle!);
 
-          // Change color of svg
-          if (initialColor) {
-            lottiePlayerSvg?.querySelectorAll('path').forEach((path: SVGPathElement) => {
-              path.style.fill = initialColor;
+          // Get computed color from parent element (text color)
+          const parentElement = lottiePlayerSvg?.closest('[class*="text-"]') || lottiePlayerSvg?.parentElement;
+          const computedColor = parentElement
+            ? window.getComputedStyle(parentElement).color
+            : null;
 
-              // Incase stroke is used in initial svg
-              if (
-                path.getAttributeNames().includes('stroke') &&
-                path.getAttribute('stroke-opacity') !== '0'
-              ) {
-                path.style.stroke = initialColor;
-              }
-            });
-          }
+          // Use initialColor if provided, otherwise use computed text color, otherwise use currentColor
+          const colorToApply = initialColor || computedColor || 'currentColor';
+
+          // Change color of svg
+          lottiePlayerSvg?.querySelectorAll('path').forEach((path: SVGPathElement) => {
+            path.style.fill = colorToApply;
+
+            // Incase stroke is used in initial svg
+            if (
+              path.getAttributeNames().includes('stroke') &&
+              path.getAttribute('stroke-opacity') !== '0'
+            ) {
+              path.style.stroke = colorToApply;
+            }
+          });
         } else if (event === 'play') {
           // Get svg element
           const lottiePlayerSvg = lottieRef.current?.getContainer()?.querySelector('svg');
@@ -90,13 +97,22 @@ export default function LottiePlayer({
           // Get svg element
           const lottiePlayerSvg = lottieRef.current?.getContainer()?.querySelector('svg');
 
+          // Get computed color from parent element (text color)
+          const parentElement = lottiePlayerSvg?.closest('[class*="text-"]') || lottiePlayerSvg?.parentElement;
+          const computedColor = parentElement
+            ? window.getComputedStyle(parentElement).color
+            : null;
+
+          // Use initialColor if provided, otherwise use computed text color, otherwise use currentColor
+          const colorToApply = initialColor || computedColor || 'currentColor';
+
           // Reset color of svg
           lottiePlayerSvg?.querySelectorAll('path').forEach((path: SVGPathElement) => {
-            path.style.fill = initialColor ?? '';
+            path.style.fill = colorToApply;
 
             // Incase stroke is used in initial svg
             if (path.getAttributeNames().includes('stroke') && path.getAttribute('stroke-opacity') !== '0') {
-              path.style.stroke = initialColor ?? '';
+              path.style.stroke = colorToApply;
             }
           });
         }
