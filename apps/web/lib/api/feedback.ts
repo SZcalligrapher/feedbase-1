@@ -280,7 +280,7 @@ export const createFeedback = (
 
     // Return feedback
     return { data: feedback, error: null };
-  })(projectSlug, cType, true, true);
+  })(projectSlug, cType, true, false); // allowAnonAccess = true, requireLogin = false (允许匿名用户创建反馈)
 
 // Update a feedback post
 export const updateFeedbackByID = (

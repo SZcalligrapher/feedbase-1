@@ -129,7 +129,8 @@ export const withProjectAuth = <T>(handler: WithProjectAuthHandler<T>) => {
     const { supabase, user, apiKey } = await createClient(cType, allowAnonAccess);
 
     // If user.error is not null, then the user is likely not logged in
-    if ((user.error !== null && requireLogin) || user.data === null) {
+    // Only require login if requireLogin is true
+    if (requireLogin && ((user.error !== null) || user.data === null)) {
       return handler(null, supabase, null, {
         message:
           user.error?.message === 'invalid claim: missing sub claim'
@@ -144,24 +145,29 @@ export const withProjectAuth = <T>(handler: WithProjectAuthHandler<T>) => {
 
     // If error is not null, then the project does not exist
     if (error) {
-      return handler(user.data.user, supabase, project, { message: 'project not found.', status: 404 });
+      return handler(user.data?.user || null, supabase, project, { message: 'project not found.', status: 404 });
     }
 
     // If api key exists, check if the api key has access to the project
     if (apiKey && apiKey.project_id !== project.id) {
-      return handler(user.data.user, supabase, project, {
+      return handler(user.data?.user || null, supabase, project, {
         message: 'unauthorized, invalid api key.',
         status: 401,
       });
     }
 
-    // Check if user is a member of the project
+    // Check if user is a member of the project (only if not allowing anonymous access)
     if (!allowAnonAccess) {
+      // If user is not logged in and we don't allow anonymous access, return error
+      if (!user.data?.user) {
+        return handler(null, supabase, project, { message: 'unauthorized, login required.', status: 401 });
+      }
+
       const { error: projectMemberError } = await supabase
         .from('project_members')
         .select()
         .eq('project_id', project.id)
-        .eq('member_id', user.data.user!.id)
+        .eq('member_id', user.data.user.id)
         .single();
 
       // If not null, user is not a member of the project and should not be able to access it
@@ -170,7 +176,7 @@ export const withProjectAuth = <T>(handler: WithProjectAuthHandler<T>) => {
       }
     }
 
-    return handler(user.data.user, supabase, project, null, allowAnonAccess);
+    return handler(user.data?.user || null, supabase, project, null, allowAnonAccess);
   };
 };
 
