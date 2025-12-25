@@ -1,10 +1,8 @@
-import { headers } from 'next/headers';
 import { Clipboard } from 'lucide-react';
 import { NavbarTabProps, ProjectProps } from '@/lib/types';
 import NavTabs from '@/components/layout/nav-tabs';
 import ProjectDropdown from '@/components/layout/project-dropdown';
 import { Button } from 'ui/components/ui/button';
-import { cn } from '@ui/lib/utils';
 import { formatRootUrl } from '@/lib/utils';
 
 export default async function Sidebar({
@@ -18,9 +16,6 @@ export default async function Sidebar({
   activeTabIndex: number;
   currentProject: ProjectProps['Row'];
 }) {
-  const headerList = headers();
-  const pathname = headerList.get('x-pathname') || '';
-  const isFeedbackPage = pathname.includes('/feedback');
   const feedbackUrl = formatRootUrl(currentProject.slug, '/feedback');
 
   return (
@@ -37,10 +32,7 @@ export default async function Sidebar({
           <a href={feedbackUrl} target='_blank' rel='noopener noreferrer'>
             <Button
               variant='secondary'
-              className={cn(
-                'text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light',
-                isFeedbackPage && 'bg-secondary text-foreground hover:bg-secondary'
-              )}>
+              className='text-foreground/[85%] hover:text-foreground w-full items-center justify-start gap-1 border border-transparent p-1 font-light'>
               {/* Icon */}
               <div className='flex transform-none flex-row items-center justify-center p-1'>
                 <Clipboard className='h-5 w-5' />
