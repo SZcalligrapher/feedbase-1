@@ -62,16 +62,16 @@ export default function CreatePostModal({
             : undefined,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            reject(data.error);
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok || data.error) {
+            reject(data.error || data.message || 'Failed to create post');
           } else {
             resolve(data);
           }
         })
         .catch((err) => {
-          reject(err.message);
+          reject(err.message || 'Failed to create post');
         });
     });
 

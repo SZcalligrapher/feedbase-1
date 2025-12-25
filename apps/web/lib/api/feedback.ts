@@ -588,15 +588,20 @@ export const getAllProjectFeedback = withProjectAuth<FeedbackWithUserProps[]>(
       return { data: null, error: { message: feedbackError.message, status: 500 } };
     }
 
-    // Get upvoters
-    const { data: userUpvotes, error: userUpvotesError } = await supabase
-      .from('feedback_upvoters')
-      .select()
-      .eq('profile_id', user!.id);
+    // Get upvoters (only if user is logged in)
+    let userUpvotes: { feedback_id: string }[] = [];
+    if (user) {
+      const { data: upvotes, error: userUpvotesError } = await supabase
+        .from('feedback_upvoters')
+        .select()
+        .eq('profile_id', user.id);
 
-    // Check for errors
-    if (userUpvotesError) {
-      return { data: null, error: { message: userUpvotesError.message, status: 500 } };
+      // Check for errors
+      if (userUpvotesError) {
+        return { data: null, error: { message: userUpvotesError.message, status: 500 } };
+      }
+
+      userUpvotes = upvotes || [];
     }
 
     // Convert feedback to unknown type and then to test type
