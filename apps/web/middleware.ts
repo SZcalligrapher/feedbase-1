@@ -133,15 +133,6 @@ export default async function middleware(req: NextRequest) {
 
   // rewrite root application to `/home` folder
   if (hostname === 'localhost:3000' || hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN) {
-    // Exclude /auth/callback from rewriting (it's handled directly by Next.js)
-    if (path === '/auth/callback' || path.startsWith('/auth/callback')) {
-      return NextResponse.next({
-        request: {
-          headers: req.headers,
-        },
-      });
-    }
-    
     // Check if path starts with a project slug (not /home, /dash, /api, etc.)
     const pathSegments = path.split('/').filter(Boolean);
     const firstSegment = pathSegments[0];
