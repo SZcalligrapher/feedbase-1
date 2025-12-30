@@ -20,16 +20,15 @@ export default function ChangelogSection() {
   return (
     <div className='flex h-full w-full flex-col items-center justify-start gap-2 pb-60'>
       <span className='select-none bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-lg text-transparent sm:text-xl'>
-        Share what&apos;s new
+        分享最新动态
       </span>
 
       <h1 className='text-foreground gap-2 text-center text-3xl font-medium leading-tight sm:text-4xl'>
-        Keep your users in the loop
+        让用户随时掌握进展
       </h1>
 
       <p className='text-foreground/60 mt-2 w-[800px] max-w-full text-center text-sm font-light sm:text-base'>
-        Feedbase adds a touch of enjoyment to help you keep your users informed through an appealing changelog
-        that&apos;s simple to create and distribute.
+        用精美的更新日志，让用户轻松获取你发布的更新。
       </p>
 
       {/* CTA */}
@@ -40,7 +39,7 @@ export default function ChangelogSection() {
           <span className="spark mask-gradient animate-flip before:animate-rotate absolute inset-0 h-[100%] w-[100%] overflow-hidden rounded-md [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
         </span>
         <span className='backdrop bg-root group-hover:bg-accent absolute inset-[1px] rounded-md transition-colors duration-200' />
-        <span className='z-10 py-0.5 text-sm text-neutral-100'>Get Started for Free</span>
+        <span className='z-10 py-0.5 text-sm text-neutral-100'>免费开始使用</span>
       </Link>
 
       {/* Bento  */}
@@ -49,9 +48,9 @@ export default function ChangelogSection() {
         <div className='flex w-full flex-col items-center justify-center gap-5 md:flex-row xl:w-fit'>
           <BentoCardWrapper className='h-[465px] w-full min-w-[350px]'>
             <div className='p-7'>
-              <h1 className='text-foreground text-lg font-medium'>OG Image support</h1>
+              <h1 className='text-foreground text-lg font-medium'>支持 OG 图</h1>
               <p className='text-foreground/60 mt-2 text-sm font-light'>
-                Set OG image for your changelog posts to make them look great when shared on social media.
+                为更新日志设置 OG 图，让社交分享更醒目。
               </p>
 
               <div className='mt-5 flex flex-col items-start justify-start rounded-md border'>
@@ -68,12 +67,11 @@ export default function ChangelogSection() {
                   <span className='text-foreground/60 text-sm font-light'>hub.feedbase.app</span>
 
                   {/* Title */}
-                  <span className='text-foreground text-sm font-medium'>OG Image support</span>
+                  <span className='text-foreground text-sm font-medium'>支持 OG 图</span>
 
                   {/* Description */}
                   <span className='text-foreground/60 text-sm font-light'>
-                    Easily set an OG image for your changelog posts to make them look great when shared on
-                    social media.
+                    轻松为更新日志设置 OG 图，让社交分享更出彩。
                   </span>
                 </div>
               </div>
@@ -83,20 +81,20 @@ export default function ChangelogSection() {
           {/* Markdown */}
           <BentoCardWrapper className='h-full min-h-[465px] w-full min-w-[350px]'>
             <div className='h-full p-7'>
-              <h1 className='text-foreground text-lg font-medium'>Markdown support</h1>
+              <h1 className='text-foreground text-lg font-medium'>支持 Markdown</h1>
               <p className='text-foreground/60 mt-2 text-sm font-light'>
-                Write changelog posts in markdown and Feedbase will automatically convert it to HTML.
+                用 Markdown 撰写更新日志，featVote 自动转换为 HTML。
               </p>
 
               {/* Markdown */}
               <div className='mt-5 flex h-[313px] flex-col gap-1.5'>
-                <Label className='text-foreground/60 text-sm font-light'>Editor</Label>
+                <Label className='text-foreground/60 text-sm font-light'>编辑器</Label>
                 <div className='flex h-1/2 flex-col gap-1.5 overflow-auto rounded-md border p-3'>
                   <RichTextEditor content={changelogContent} setContent={setChangelogContent} proseInvert />
                 </div>
 
                 {/* Preview */}
-                <Label className='text-foreground/60 text-sm font-light'>Preview</Label>
+                <Label className='text-foreground/60 text-sm font-light'>预览</Label>
                 <div
                   className={cn(
                     'flex h-1/2 flex-col justify-start overflow-x-auto rounded-md border px-3 text-sm',
@@ -112,9 +110,9 @@ export default function ChangelogSection() {
         {/* And much more */}
         <BentoCardWrapper className='h-full min-h-[465px] w-full min-w-[350px] xl:w-1/3'>
           <div className='p-7'>
-            <h1 className='text-foreground text-lg font-medium'>Receive Updates</h1>
+            <h1 className='text-foreground text-lg font-medium'>接收更新</h1>
             <p className='text-foreground/60 mt-2 text-sm font-light'>
-              Users can subscribe to your changelog to automatically get notified when you post an update.
+              用户可订阅你的更新日志，在你发布时自动收到通知。
             </p>
 
             {/* Platforms */}
@@ -129,7 +127,7 @@ export default function ChangelogSection() {
                 <div className='flex flex-col gap-1.5'>
                   <span className='text-foreground text-sm font-medium'>Twitter</span>
                   <span className='text-foreground/60 text-sm font-light'>
-                    Account that users can follow to get updates.
+                    用户可以关注的更新账号。
                   </span>
                 </div>
               </div>
@@ -142,9 +140,9 @@ export default function ChangelogSection() {
 
                 {/* Title & Description */}
                 <div className='flex flex-col gap-1.5'>
-                  <span className='text-foreground text-sm font-medium'>Email</span>
+                  <span className='text-foreground text-sm font-medium'>邮件</span>
                   <span className='text-foreground/60 text-sm font-light'>
-                    Email that users can subscribe to.
+                    用户可订阅的邮件通知。
                   </span>
                 </div>
               </div>
@@ -159,13 +157,13 @@ export default function ChangelogSection() {
                 <div className='flex flex-col gap-1.5'>
                   <span className='text-foreground text-sm font-medium'>RSS</span>
                   <span className='text-foreground/60 text-sm font-light'>
-                    RSS feed that users can subscribe to.
+                    用户可订阅的 RSS 源。
                   </span>
                 </div>
               </div>
             </div>
 
-            <span className='text-foreground/60 text-sm font-light'>And much more...</span>
+            <span className='text-foreground/60 text-sm font-light'>还有更多功能...</span>
           </div>
         </BentoCardWrapper>
       </div>

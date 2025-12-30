@@ -18,15 +18,15 @@ import { Icons } from '@/components/shared/icons/icons-static';
 
 export const navTabs = [
   {
-    label: 'Docs',
+    label: '文档',
     href: '/docs',
   },
   {
-    label: 'Demo',
+    label: '演示',
     href: '/demo',
   },
   {
-    label: 'Deploy',
+    label: '部署',
     href: '/deploy',
   },
 ];
@@ -82,7 +82,7 @@ export default function HomeNav() {
               <Button
                 className='border-background h-8 min-w-fit shrink-0 rounded-full border px-2.5 text-sm font-normal sm:inline-flex'
                 size='sm'>
-                Get Started
+                开始使用
               </Button>
             </Link>
           ) : null}
@@ -92,7 +92,7 @@ export default function HomeNav() {
         <div className={cn('flex flex-row items-center justify-center gap-3')}>
           <Link href={formatRootUrl('dash', '/signup')} className='inline-flex'>
             <Button className='h-8 sm:inline-flex' size='sm'>
-              Get Started
+              开始使用
             </Button>
           </Link>
 
@@ -105,7 +105,7 @@ export default function HomeNav() {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader className='items-start justify-start pb-3'>
-                <SheetTitle className='font-medium'>Menu</SheetTitle>
+                <SheetTitle className='font-medium'>菜单</SheetTitle>
               </SheetHeader>
 
               <div className='-ml-3 flex flex-col items-start justify-start gap-2'>

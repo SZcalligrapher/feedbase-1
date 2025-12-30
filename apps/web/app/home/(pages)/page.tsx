@@ -16,32 +16,25 @@ export default function Landing() {
       {/* Title */}
       <div className='flex h-screen w-full flex-col items-center justify-center xl:gap-2'>
         <h1 className='text-foreground flex w-fit max-w-full shrink-0 flex-col items-center justify-center gap-2 text-center text-3xl font-bold sm:text-5xl md:text-5xl lg:text-6xl'>
-          {/* Collect Feedback and Share Product Updates in One Central Place */}
-          <span>
-            Collect Feedback <span className='hidden sm:inline-block'>and</span>
-          </span>
-
-          <span className='block sm:hidden'>and Share Updates</span>
-          <span className='hidden sm:block'>Share Product Updates</span>
-
-          <span>in One Central Place</span>
+          <span>在一个平台</span>
+          <span className='block sm:hidden'>收集反馈并分享更新</span>
+          <span className='hidden sm:block'>集中收集反馈与发布产品更新</span>
         </h1>
 
         <p className='text-foreground/60 mt-5 max-w-xs text-center text-sm font-light sm:block sm:max-w-lg sm:text-lg md:max-w-xl'>
-          Feedbase simplifies feedback collection, feature prioritization, and product update sharing,
-          allowing you to focus on building.
+          featVote 帮你简化收集反馈、功能优先级排序与更新发布，让你专注产品迭代。
         </p>
 
         <div className='mt-5 flex w-full flex-row items-center justify-center gap-5'>
           <Link href={formatRootUrl('dash', '/signup')}>
-            <Button className='border-background inline-flex rounded-full border'>Get Started</Button>
+            <Button className='border-background inline-flex rounded-full border'>开始使用</Button>
           </Link>
 
           <Link href='/github'>
             <button
               className='hover:animate-background-shine text-foreground inline-flex h-9 items-center justify-center rounded-full border bg-[linear-gradient(110deg,#06060A,90%,#1e2631,95%,#06060A)] bg-[length:225%_100%] px-4 py-1 text-sm font-light transition-colors'
               type='button'>
-              Star on GitHub
+              在 GitHub 点 Star
             </button>
           </Link>
         </div>
@@ -49,7 +42,7 @@ export default function Landing() {
         <Link
           href={formatRootUrl('hub')}
           className='text-foreground/60 hover:text-foreground/90 group relative mt-4 flex w-fit flex-row items-center justify-center p-1 text-center text-sm font-light'>
-          <p className='mr-1 '>See it in action</p>
+          <p className='mr-1 '>查看在线演示</p>
           <ArrowRight className='relative mb-[1px] inline h-4 w-0 transition-all group-hover:w-4' />
           <ChevronRight className='relative mb-[1px] inline h-4 w-4 transition-all group-hover:w-0' />
         </Link>
@@ -70,24 +63,22 @@ export default function Landing() {
           <div className='absolute h-full w-full bg-[radial-gradient(#2e2e2f_0.5px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_40%_40%_at_50%_50%,#000_70%,transparent_100%)]' />
         </div>
         <h1 className='text-foreground gap-2 text-center text-3xl font-medium leading-tight sm:text-5xl'>
-          Create your feedback
-          <br /> community today.
+          立即创建你的反馈社区
         </h1>
         <p className='text-foreground/60 mt-5 w-full text-center text-sm font-light sm:text-lg'>
-          Capture feedback, post updates, and engage
-          <br /> with your users in one central place.
+          在一个地方收集反馈、发布更新，并与用户持续互动。
         </p>
 
         <div className='mt-10 flex w-full flex-row items-center justify-center gap-5'>
           <Link href={formatRootUrl('dash', '/signup')}>
-            <Button className='border-background inline-flex border'>Get Started</Button>
+            <Button className='border-background inline-flex border'>开始使用</Button>
           </Link>
 
           <Link
             href={formatRootUrl('hub')}
             className='group relative grid h-9 items-center overflow-hidden rounded-md px-4 py-1 shadow-[0_1000px_0_0_hsl(0_0%_20%)_inset] transition-colors duration-200'>
             <span className='backdrop bg-root group-hover:bg-accent absolute inset-[1px] rounded-md transition-colors duration-200' />
-            <span className='z-10 py-0.5 text-sm text-neutral-100'>View Demo</span>
+            <span className='z-10 py-0.5 text-sm text-neutral-100'>查看 Demo</span>
           </Link>
         </div>
       </div>

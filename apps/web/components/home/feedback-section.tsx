@@ -44,16 +44,15 @@ export default function FeedbackSection() {
   return (
     <div className='flex h-full w-full flex-col items-center justify-start gap-2 pb-60'>
       <span className='select-none bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-lg text-transparent sm:text-xl'>
-        Capture feedback
+        收集反馈
       </span>
 
       <h1 className='w-full gap-2 text-center text-3xl font-medium leading-tight text-white sm:text-4xl'>
-        Build your feedback community
+        打造你的反馈社区
       </h1>
 
       <p className='mt-2 w-[800px] max-w-full text-center text-sm font-light text-white/60 sm:text-base'>
-        A place for your users to give feedback, support creative ideas, and have meaningful discussions about
-        product features and improvements.
+        让用户提交反馈、支持创意，并就产品功能与改进展开有价值的讨论。
       </p>
 
       {/* Bento  */}
@@ -62,9 +61,9 @@ export default function FeedbackSection() {
         <div className='flex w-full flex-col items-center justify-center gap-5 md:flex-row xl:w-fit'>
           <BentoCardWrapper className='h-[260px] w-full min-w-[350px]'>
             <div className='p-7'>
-              <h1 className='text-lg font-medium text-white'>Prioritize with voting</h1>
+              <h1 className='text-lg font-medium text-white'>用投票确定优先级</h1>
               <p className='mt-2 text-sm font-light text-white/60'>
-                Stop guessing - let your users tell you what they want to see next.
+                不用再猜，让用户告诉你接下来该做什么。
               </p>
             </div>
 
@@ -101,13 +100,12 @@ export default function FeedbackSection() {
                 <div className='flex flex-col gap-1'>
                   {/* Title */}
                   <span className='text-foreground/90 line-clamp-2 pr-10 text-sm font-medium'>
-                    Allow custom domains
+                    支持自定义域名
                   </span>
 
                   {/* Description */}
                   <div className={cn('line-clamp-2 max-w-full text-sm', PROSE_CN)}>
-                    Allow custom domains for each project. This will allow users to use their own domain for
-                    the feedback portal.
+                    每个项目都可绑定自己的域名，让反馈门户直接使用你的域名。
                   </div>
                 </div>
 
@@ -130,9 +128,9 @@ export default function FeedbackSection() {
           {/* Tags */}
           <BentoCardWrapper className='h-[260px] w-full min-w-[350px]'>
             <div className='h-full p-7'>
-              <h1 className='text-lg font-medium text-white'>Categorize your feedback</h1>
+              <h1 className='text-lg font-medium text-white'>为反馈分类</h1>
               <p className='mt-2 text-sm font-light text-white/60'>
-                Simplify feedback organization with tags and statuses for better user understanding.
+                通过标签与状态整理反馈，帮助用户更好理解。
               </p>
 
               <div className='mt-3 flex h-full flex-col items-start gap-3'>
@@ -152,9 +150,9 @@ export default function FeedbackSection() {
         {/* Comments */}
         <BentoCardWrapper className='h-[260px] w-full min-w-[350px] xl:w-1/3'>
           <div className='p-7'>
-            <h1 className='text-lg font-medium text-white'>Discuss with your users</h1>
+            <h1 className='text-lg font-medium text-white'>与用户讨论</h1>
             <p className='mt-2 text-sm font-light text-white/60'>
-              Engage users, answer questions, and foster meaningful product discussions.
+              与用户互动、解答疑问，促成有价值的产品讨论。
             </p>
 
             <div className='prose-invert mb-2 mt-8 flex h-[98px] w-full flex-col items-center justify-end rounded-sm border p-4'>
@@ -162,7 +160,7 @@ export default function FeedbackSection() {
               <RichTextEditor
                 content={commentContent}
                 setContent={setCommentContent}
-                placeholder='Write your comment here...'
+                placeholder='在此输入评论...'
                 characterLimit={50}
                 className='overflow-auto'
                 proseInvert
@@ -188,13 +186,13 @@ export default function FeedbackSection() {
                         }, 1750);
                       }),
                       {
-                        loading: 'Posting comment...',
-                        success: 'Comment posted!',
-                        error: 'Failed to post comment.',
+                        loading: '正在发布评论...',
+                        success: '评论已发布！',
+                        error: '发布失败。',
                       }
                     );
                   }}>
-                  Post Comment
+                  发布评论
                 </Button>
               </div>
             </div>

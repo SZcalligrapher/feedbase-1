@@ -74,12 +74,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
       <main className='bg-root flex min-h-screen w-full min-w-full overflow-hidden'>
         {/* Sidebar - Fixed on the left */}
-        <Sidebar
-          tabs={tabs}
-          projects={projects}
-          activeTabIndex={activeTabIndex}
-          currentProject={currentProject}
-        />
+          <Sidebar
+            tabs={tabs}
+            projects={projects}
+            activeTabIndex={activeTabIndex}
+            currentProject={currentProject}
+          />
 
         {/* Main Content Area */}
         <div className='flex flex-1 flex-col ml-[240px]'>
@@ -104,7 +104,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
         {/* Navbar (mobile) */}
         <NavbarMobile tabs={tabs} activeTabIndex={activeTabIndex} currentProject={currentProject} />
-      </main>
+    </main>
     </ThemeProvider>
   );
 }

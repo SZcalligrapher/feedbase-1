@@ -55,17 +55,16 @@ export default function DashboardSection() {
   return (
     <div className='flex h-full w-full flex-col items-center justify-start gap-2'>
       <span className='select-none bg-gradient-to-t from-[#c7d2fe] to-[#8678f9] bg-clip-text text-lg text-transparent sm:text-xl'>
-        Manage & Customize
+        管理与自定义
       </span>
 
       {/* TODO: Fidn fuckign better heading and desc and go over all texts */}
       <h1 className='text-foreground gap-2 text-center text-3xl font-medium leading-tight sm:text-4xl'>
-        Have full control from a single dashboard
+        在一个控制台掌握全局
       </h1>
 
       <p className='text-foreground/60 mt-2 w-[800px] max-w-full text-center text-sm font-light sm:text-base'>
-        Enhance your workflow from a centralized dashboard - analyze feedback, prepare updates, respond to
-        user inquiries, and more!
+        在集中式控制台优化工作流——分析反馈、准备更新、回复用户等。
       </p>
 
       {/* Bento  */}
@@ -74,9 +73,9 @@ export default function DashboardSection() {
           {/* Customization */}
           <BentoCardWrapper className='h-[295px] w-full min-w-[350px]'>
             <div className='p-7'>
-              <h1 className='text-lg font-medium text-white'>Fully customizable</h1>
+              <h1 className='text-lg font-medium text-white'>完全可自定义</h1>
               <p className='mt-2 text-sm font-light text-white/60'>
-                Customize your hub to reflect your brand&apos;s unique identity and style.
+                按照品牌调性定制你的 Hub。
               </p>
 
               {/* Project Logo */}
@@ -93,7 +92,7 @@ export default function DashboardSection() {
                         logo.radius
                       )}>
                       <p className='absolute hidden text-xs text-gray-500 group-hover:block group-hover:transition-all group-hover:duration-300 dark:text-gray-400'>
-                        Upload
+                        上传
                       </p>
 
                       {logo.url ? (
@@ -109,7 +108,7 @@ export default function DashboardSection() {
                         />
                       ) : (
                         <p className='absolute text-xs text-gray-500 group-hover:hidden dark:text-gray-400'>
-                          Upload
+                          上传
                         </p>
                       )}
                       <input id='dropzone-file' type='file' className='hidden' onChange={onChangePicture} />
@@ -119,7 +118,7 @@ export default function DashboardSection() {
 
                 {/* Logo Radius */}
                 <div className='space-y-1 pt-1'>
-                  <Label className='text-foreground/70 text-sm font-light'>Logo Radius</Label>
+                  <Label className='text-foreground/70 text-sm font-light'>Logo 圆角</Label>
 
                   <RadioGroup
                     defaultValue='rounded-md'
@@ -129,23 +128,23 @@ export default function DashboardSection() {
                     }}>
                     <div className='flex items-center space-x-2'>
                       <RadioGroupItem value='rounded-none' id='square' className='h-[14px] w-[14px]' />
-                      <Label htmlFor='square'>Square</Label>
+                      <Label htmlFor='square'>方形</Label>
                     </div>
                     <div className='flex items-center space-x-2'>
                       <RadioGroupItem value='rounded-md' id='rounded' className='h-[14px] w-[14px]' />
-                      <Label htmlFor='rounded'>Rounded</Label>
+                      <Label htmlFor='rounded'>圆角</Label>
                     </div>
 
                     <div className='flex items-center space-x-2'>
                       <RadioGroupItem value='rounded-full' id='circle' className='h-[14px] w-[14px]' />
-                      <Label htmlFor='circle'>Circle</Label>
+                      <Label htmlFor='circle'>圆形</Label>
                     </div>
                   </RadioGroup>
                 </div>
 
                 {/* Color */}
                 <div className='space-y-1 pt-1'>
-                  <Label className='text-foreground/70 text-sm font-light'>Theme</Label>
+                  <Label className='text-foreground/70 text-sm font-light'>主题</Label>
 
                   <div className='bg-background focus-within:ring-ring ring-offset-root flex h-8 w-full max-w-[125px] rounded-md border text-sm font-extralight transition-shadow duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-1'>
                     <div
