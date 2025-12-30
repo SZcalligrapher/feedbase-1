@@ -412,6 +412,9 @@ export const deleteFeedbackByID = withFeedbackAuth<FeedbackProps['Row']>(
       return { data: null, error };
     }
 
+    // Store user_id before deletion to check for orphaned widget user profile
+    const feedbackUserId = feedback!.user_id;
+
     // Delete feedback
     const { data: deletedFeedback, error: deleteError } = await supabase
       .from('feedback')
@@ -423,6 +426,45 @@ export const deleteFeedbackByID = withFeedbackAuth<FeedbackProps['Row']>(
     // Check for errors
     if (deleteError) {
       return { data: null, error: { message: deleteError.message, status: 500 } };
+    }
+
+    // Check if the user is a widget user profile (anonymous user)
+    // Widget user profiles have email format: xxx+widget@xxx or anonymous-xxx@widget.local
+    const { data: userProfile, error: profileError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', feedbackUserId)
+      .single();
+
+    if (!profileError && userProfile) {
+      const isWidgetUser =
+        userProfile.email.includes('+widget@') || userProfile.email.includes('@widget.local');
+
+      if (isWidgetUser) {
+        // Check if this widget user profile has any other feedback or comments
+        const { data: otherFeedback, error: feedbackCheckError } = await supabase
+          .from('feedback')
+          .select('id')
+          .eq('user_id', feedbackUserId)
+          .limit(1);
+
+        const { data: otherComments, error: commentsCheckError } = await supabase
+          .from('feedback_comments')
+          .select('id')
+          .eq('user_id', feedbackUserId)
+          .limit(1);
+
+        // If no other feedback or comments exist, delete the orphaned widget user profile
+        if (
+          !feedbackCheckError &&
+          !commentsCheckError &&
+          (!otherFeedback || otherFeedback.length === 0) &&
+          (!otherComments || otherComments.length === 0)
+        ) {
+          // Delete the orphaned widget user profile
+          await supabase.from('profiles').delete().eq('id', feedbackUserId);
+        }
+      }
     }
 
     // Return success
