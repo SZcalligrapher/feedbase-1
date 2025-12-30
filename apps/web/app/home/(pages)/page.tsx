@@ -26,8 +26,8 @@ export default function Landing() {
         </p>
 
         <div className='mt-5 flex w-full flex-row items-center justify-center gap-5'>
-          <Link href={formatRootUrl('dash', '/signup')}>
-            <Button className='border-background inline-flex rounded-full border'>开始使用</Button>
+          <Link href='/featVote'>
+            <Button className='border-background inline-flex rounded-full border'>前往 featVote</Button>
           </Link>
 
           <Link href='/github'>

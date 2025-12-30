@@ -67,7 +67,7 @@ export default function FeedbackSection() {
               </p>
             </div>
 
-              <div className='group flex h-32 w-full translate-x-7 cursor-pointer flex-row items-stretch  justify-between rounded-tl-md border-l border-t transition-all'>
+            <div className='group flex h-32 w-full translate-x-7 cursor-pointer flex-row items-stretch  justify-between rounded-tl-md border-l border-t transition-all'>
               <div className='flex items-center border-r'>
                 {/* Upvotes */}
                 <Button
@@ -78,12 +78,12 @@ export default function FeedbackSection() {
                     setUpvotes(upvotes === 62 ? 63 : 62);
                   }}>
                   {/* Arrow */}
-                    <ChevronUp
-                      className={cn(
-                        'h-4 text-sm font-light transition-colors ',
-                        upvotes === 63 ? 'text-foreground' : 'text-foreground/60'
-                      )}
-                    />
+                  <ChevronUp
+                    className={cn(
+                      'h-4 text-sm font-light transition-colors ',
+                      upvotes === 63 ? 'text-foreground' : 'text-foreground/60'
+                    )}
+                  />
 
                   {/* Upvotes */}
                   <div
