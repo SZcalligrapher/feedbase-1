@@ -31,8 +31,12 @@ export async function POST(req: Request) {
     }
   );
 
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().slice(0, 10);
+  // Get today's date in Beijing timezone (YYYY-MM-DD format)
+  // Convert to Beijing timezone to match the database function
+  const beijingDate = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' })
+  );
+  const today = beijingDate.toISOString().slice(0, 10);
 
   // Query today's invite code
   const { data, error } = await supabase
