@@ -64,7 +64,7 @@ export default function ChangelogSection() {
 
                 <div className='bg-background flex flex-col gap-1.5 rounded-b-md p-3'>
                   {/* url */}
-                  <span className='text-foreground/60 text-sm font-light'>hub.feedbase.app</span>
+                  <span className='text-foreground/60 text-sm font-light'>inhau.co</span>
 
                   {/* Title */}
                   <span className='text-foreground text-sm font-medium'>支持 OG 图</span>
