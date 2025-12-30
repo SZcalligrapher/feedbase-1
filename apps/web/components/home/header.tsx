@@ -25,10 +25,6 @@ export const navTabs = [
     label: '演示',
     href: '/demo',
   },
-  {
-    label: '部署',
-    href: '/deploy',
-  },
 ];
 
 export default function HomeNav() {

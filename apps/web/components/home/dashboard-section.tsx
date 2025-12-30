@@ -71,10 +71,10 @@ export default function DashboardSection() {
       <div className='mt-10 flex w-full flex-col items-center justify-center gap-5 xl:flex-row'>
         <div className='flex w-full flex-col items-center justify-center gap-5 md:flex-row xl:w-fit'>
           {/* Customization */}
-          <BentoCardWrapper className='h-[295px] w-full min-w-[350px]'>
+          <BentoCardWrapper className='h-[295px] w-full min-w-[350px] bg-white text-foreground border shadow-sm'>
             <div className='p-7'>
-              <h1 className='text-lg font-medium text-white'>完全可自定义</h1>
-              <p className='mt-2 text-sm font-light text-white/60'>
+              <h1 className='text-lg font-medium text-foreground'>完全可自定义</h1>
+              <p className='mt-2 text-sm font-light text-foreground/70'>
                 按照品牌调性定制你的 Hub。
               </p>
 

@@ -264,18 +264,18 @@ export const createFeedback = (
 
     // Create project notification (only if user is logged in)
     if (user) {
-      waitUntil(async () => {
-        await supabase
-          .from('notifications')
-          .insert({
-            type: 'post',
-            project_id: project!.id,
+    waitUntil(async () => {
+      await supabase
+        .from('notifications')
+        .insert({
+          type: 'post',
+          project_id: project!.id,
             initiator_id: user.id,
-            feedback_id: feedbackData.id,
-          })
-          .select()
-          .single();
-      });
+          feedback_id: feedbackData.id,
+        })
+        .select()
+        .single();
+    });
     }
 
     // Return feedback
@@ -634,13 +634,13 @@ export const getAllProjectFeedback = withProjectAuth<FeedbackWithUserProps[]>(
     let userUpvotes: { feedback_id: string }[] = [];
     if (user) {
       const { data: upvotes, error: userUpvotesError } = await supabase
-        .from('feedback_upvoters')
-        .select()
+      .from('feedback_upvoters')
+      .select()
         .eq('profile_id', user.id);
 
-      // Check for errors
-      if (userUpvotesError) {
-        return { data: null, error: { message: userUpvotesError.message, status: 500 } };
+    // Check for errors
+    if (userUpvotesError) {
+      return { data: null, error: { message: userUpvotesError.message, status: 500 } };
       }
 
       userUpvotes = upvotes || [];

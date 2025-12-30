@@ -64,17 +64,17 @@ export default function LottiePlayer({
           const colorToApply = initialColor || computedColor || 'currentColor';
 
           // Change color of svg
-          lottiePlayerSvg?.querySelectorAll('path').forEach((path: SVGPathElement) => {
+            lottiePlayerSvg?.querySelectorAll('path').forEach((path: SVGPathElement) => {
             path.style.fill = colorToApply;
 
-            // Incase stroke is used in initial svg
-            if (
-              path.getAttributeNames().includes('stroke') &&
-              path.getAttribute('stroke-opacity') !== '0'
-            ) {
+              // Incase stroke is used in initial svg
+              if (
+                path.getAttributeNames().includes('stroke') &&
+                path.getAttribute('stroke-opacity') !== '0'
+              ) {
               path.style.stroke = colorToApply;
-            }
-          });
+              }
+            });
         } else if (event === 'play') {
           // Get svg element
           const lottiePlayerSvg = lottieRef.current?.getContainer()?.querySelector('svg');

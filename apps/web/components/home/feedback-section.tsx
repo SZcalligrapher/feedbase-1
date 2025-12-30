@@ -47,11 +47,11 @@ export default function FeedbackSection() {
         收集反馈
       </span>
 
-      <h1 className='w-full gap-2 text-center text-3xl font-medium leading-tight text-white sm:text-4xl'>
+      <h1 className='w-full gap-2 text-center text-3xl font-medium leading-tight text-foreground sm:text-4xl'>
         打造你的反馈社区
       </h1>
 
-      <p className='mt-2 w-[800px] max-w-full text-center text-sm font-light text-white/60 sm:text-base'>
+      <p className='mt-2 w-[800px] max-w-full text-center text-sm font-light text-foreground/60 sm:text-base'>
         让用户提交反馈、支持创意，并就产品功能与改进展开有价值的讨论。
       </p>
 
@@ -59,15 +59,15 @@ export default function FeedbackSection() {
       <div className='mt-10 flex w-full flex-col items-center justify-center gap-5 xl:flex-row'>
         {/* Upvotes */}
         <div className='flex w-full flex-col items-center justify-center gap-5 md:flex-row xl:w-fit'>
-          <BentoCardWrapper className='h-[260px] w-full min-w-[350px]'>
+          <BentoCardWrapper className='h-[260px] w-full min-w-[350px] bg-white text-foreground border shadow-sm'>
             <div className='p-7'>
-              <h1 className='text-lg font-medium text-white'>用投票确定优先级</h1>
-              <p className='mt-2 text-sm font-light text-white/60'>
+              <h1 className='text-lg font-medium text-foreground'>用投票确定优先级</h1>
+              <p className='mt-2 text-sm font-light text-foreground/70'>
                 不用再猜，让用户告诉你接下来该做什么。
               </p>
             </div>
 
-            <div className='group flex h-32 w-full translate-x-7 cursor-pointer flex-row items-stretch  justify-between rounded-tl-md border-l border-t transition-all'>
+              <div className='group flex h-32 w-full translate-x-7 cursor-pointer flex-row items-stretch  justify-between rounded-tl-md border-l border-t transition-all'>
               <div className='flex items-center border-r'>
                 {/* Upvotes */}
                 <Button
@@ -78,12 +78,12 @@ export default function FeedbackSection() {
                     setUpvotes(upvotes === 62 ? 63 : 62);
                   }}>
                   {/* Arrow */}
-                  <ChevronUp
-                    className={cn(
-                      'h-4 text-sm font-light transition-colors ',
-                      upvotes === 63 ? 'text-foreground' : 'text-foreground/60'
-                    )}
-                  />
+                    <ChevronUp
+                      className={cn(
+                        'h-4 text-sm font-light transition-colors ',
+                        upvotes === 63 ? 'text-foreground' : 'text-foreground/60'
+                      )}
+                    />
 
                   {/* Upvotes */}
                   <div
@@ -126,10 +126,10 @@ export default function FeedbackSection() {
           </BentoCardWrapper>
 
           {/* Tags */}
-          <BentoCardWrapper className='h-[260px] w-full min-w-[350px]'>
+          <BentoCardWrapper className='h-[260px] w-full min-w-[350px] bg-white text-foreground border shadow-sm'>
             <div className='h-full p-7'>
-              <h1 className='text-lg font-medium text-white'>为反馈分类</h1>
-              <p className='mt-2 text-sm font-light text-white/60'>
+              <h1 className='text-lg font-medium text-foreground'>为反馈分类</h1>
+              <p className='mt-2 text-sm font-light text-foreground/70'>
                 通过标签与状态整理反馈，帮助用户更好理解。
               </p>
 
@@ -148,22 +148,21 @@ export default function FeedbackSection() {
         </div>
 
         {/* Comments */}
-        <BentoCardWrapper className='h-[260px] w-full min-w-[350px] xl:w-1/3'>
+        <BentoCardWrapper className='h-[260px] w-full min-w-[350px] xl:w-1/3 bg-white text-foreground border shadow-sm'>
           <div className='p-7'>
-            <h1 className='text-lg font-medium text-white'>与用户讨论</h1>
-            <p className='mt-2 text-sm font-light text-white/60'>
+            <h1 className='text-lg font-medium text-foreground'>与用户讨论</h1>
+            <p className='mt-2 text-sm font-light text-foreground/70'>
               与用户互动、解答疑问，促成有价值的产品讨论。
             </p>
 
-            <div className='prose-invert mb-2 mt-8 flex h-[98px] w-full flex-col items-center justify-end rounded-sm border p-4'>
+            <div className='mb-2 mt-8 flex h-[98px] w-full flex-col items-center justify-end rounded-sm border bg-white p-4 text-foreground'>
               {/* Editable Comment div with placeholder */}
               <RichTextEditor
                 content={commentContent}
                 setContent={setCommentContent}
                 placeholder='在此输入评论...'
                 characterLimit={50}
-                className='overflow-auto'
-                proseInvert
+                className='overflow-auto text-foreground'
               />
 
               {/* Bottom Row */}

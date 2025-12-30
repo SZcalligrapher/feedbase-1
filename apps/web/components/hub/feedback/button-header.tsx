@@ -101,10 +101,10 @@ export default function FeedbackHeader({
           </div>
 
           <CreatePostModal projectSlug={projectSlug} isLoggedIn={isLoggedIn}>
-            <Button variant='default' className='font-base shrink-0 text-sm'>
-              Create Post
-            </Button>
-          </CreatePostModal>
+              <Button variant='default' className='font-base shrink-0 text-sm'>
+                Create Post
+              </Button>
+            </CreatePostModal>
         </div>
       </div>
     </>

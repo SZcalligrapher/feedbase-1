@@ -48,14 +48,14 @@ export default function BentoCardWrapper({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        'relative max-w-md select-none overflow-hidden rounded-md border bg-[#0F1116]',
+        'relative max-w-md select-none overflow-hidden rounded-md border bg-white shadow-sm',
         className
       )}>
       <div
         className='pointer-events-none absolute -inset-px hidden opacity-0 transition duration-300 sm:block'
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.06), transparent 40%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(0,0,0,.06), transparent 40%)`,
         }}
       />
       {children}
