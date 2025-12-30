@@ -45,7 +45,7 @@ export default function InhauLanding() {
             <Link
               key={item.name}
               href={item.href}
-              className='group block rounded-2xl border border-border/60 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md'>
+              className='group block rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg'>
               <div className='flex flex-wrap items-center justify-between gap-3'>
                 <div className='flex items-center gap-3'>
                   <div className='flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-700'>
