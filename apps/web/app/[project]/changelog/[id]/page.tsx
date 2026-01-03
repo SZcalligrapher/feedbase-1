@@ -158,7 +158,7 @@ export default async function ChangelogPage({ params }: Props) {
           <div
             // TODO: Change this to not be html but markdown
             // prose-code:bg-foreground/10 prose-code:rounded-md prose-code:px-1 prose-code:py-0.5 should only be applied if codeblock is not in pre
-            className={`${fontMono.variable} prose prose-invert prose-p:font-extralight prose-zinc text-foreground/70 prose-headings:font-medium prose-headings:text-foreground/80 prose-strong:text-foreground/80 prose-strong:font-normal prose-code:text-foreground/70 prose-code:font-light prose-code:font-monospace prose-blockquote:text-foreground/80 prose-blockquote:font-normal w-0 min-w-full font-light`}
+            className={`${fontMono.variable} prose prose-invert prose-p:font-extralight prose-zinc text-foreground/90 prose-headings:font-medium prose-headings:text-foreground prose-strong:text-foreground prose-strong:font-normal prose-code:text-foreground/85 prose-code:font-light prose-code:font-monospace prose-blockquote:text-foreground/90 prose-blockquote:font-normal w-0 min-w-full font-light`}
             // => LUM-32
             dangerouslySetInnerHTML={{ __html: changelog.content! }}
           />

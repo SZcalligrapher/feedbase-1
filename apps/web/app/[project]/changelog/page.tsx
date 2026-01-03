@@ -175,14 +175,14 @@ export default async function Changelogs({ params }: Props) {
 
                   {/* Summary */}
                   {projectConfig.changelog_preview_style === 'summary' && (
-                    <p className='text-foreground/70 cursor-default pb-4 text-base font-extralight'>
+                    <p className='text-foreground/90 cursor-default pb-4 text-base font-extralight'>
                       {changelog.summary}
                     </p>
                   )}
 
                   {projectConfig.changelog_preview_style === 'content' && (
                     <div
-                      className={`${fontMono.variable} prose prose-invert prose-p:font-extralight prose-zinc text-foreground/70 prose-headings:font-medium prose-headings:text-foreground/80 prose-strong:text-foreground/80 prose-strong:font-normal prose-code:text-foreground/70 prose-code:font-light prose-code:bg-foreground/10 prose-code:rounded-md prose-code:px-1 prose-code:py-0.5 prose-code:font-monospace prose-blockquote:text-foreground/80 prose-blockquote:font-normal font-light`}
+                      className={`${fontMono.variable} prose prose-invert prose-p:font-extralight prose-zinc text-foreground/90 prose-headings:font-medium prose-headings:text-foreground prose-strong:text-foreground prose-strong:font-normal prose-code:text-foreground/85 prose-code:font-light prose-code:bg-foreground/10 prose-code:rounded-md prose-code:px-1 prose-code:py-0.5 prose-code:font-monospace prose-blockquote:text-foreground/90 prose-blockquote:font-normal font-light`}
                       dangerouslySetInnerHTML={{ __html: changelog.content! }}
                     />
                   )}
